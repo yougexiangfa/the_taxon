@@ -9,15 +9,13 @@ Gem::Specification.new do |s|
   s.version     = TheTaxon::VERSION
   s.authors     = ["qinmingyuan"]
   s.email       = ["mingyuan0715@foxmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of TheTaxon."
-  s.description = "TODO: Description of TheTaxon."
+  s.homepage    = "https://github.com/yigexiangfa/the_taxon"
+  s.summary     = "Summary of TheTaxon."
+  s.description = "Description of TheTaxon."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", 'README.md']
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4.2.3"
-
-  s.add_development_dependency "sqlite3"
+  s.add_dependency "rails", "~> 5.0"
 end

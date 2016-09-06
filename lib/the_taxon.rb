@@ -1,4 +1,1 @@
-require "the_taxon/engine"
-
-module TheTaxon
-end
+require 'the_taxon/engine'
