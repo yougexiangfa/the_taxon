@@ -1,17 +1,8 @@
-<%= form_for(node) do |f| %>
-  <% if node.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(node.errors.count, "error") %> prohibited this node from being saved:</h2>
-
-      <ul>
-      <% node.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<%= default_form_for @node do |f| %>
+  <%= f.text_field :name, label: '昵称：' %>
+  <%= f.text_field :email, label: '邮箱：' %>
+  <%= f.text_field :mobile, label: '电话号：' %>
+  <%= f.text_field :password, label: 'Password：' %>
+  <%= f.check_box :disabled, label: 'Disabled: ' %>
+  <%= f.submit %>
 <% end %>
