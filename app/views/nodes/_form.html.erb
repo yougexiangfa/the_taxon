@@ -1,8 +1,29 @@
 <%= default_form_for @node do |f| %>
-  <%= f.text_field :name, label: '昵称：' %>
-  <%= f.text_field :email, label: '邮箱：' %>
-  <%= f.text_field :mobile, label: '电话号：' %>
-  <%= f.text_field :password, label: 'Password：' %>
-  <%= f.check_box :disabled, label: 'Disabled: ' %>
+  <%= f.text_field :name, label: '名称：' %>
+  <%= f.text_field :description, label: '描述：' %>
+  <div class="inline field">
+    <label class="six wide field">Leader</label>
+    <div class="ui multiple search selection dropdown">
+      <%= f.hidden_field :parent_ids %>
+      <i class="dropdown icon"></i>
+      <input type="text" class="search" tabindex="0">
+      <div class="default text">'Search'</div>
+    </div>
+  </div>
   <%= f.submit %>
 <% end %>
+
+<script>
+  $('.ui.dropdown.search').dropdown({
+    apiSettings: {
+      url: '/nodes/top',
+      cache: false
+    },
+    fields: {
+      name: 'name',
+      value: 'id',
+      text: 'name'
+    },
+    debug: true
+  });
+</script>

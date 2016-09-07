@@ -1,6 +1,6 @@
 class Node < ActiveRecord::Base
-  has_many :parents, class_name: 'NodeParent', dependent: :destroy
-  has_many :children, class_name: 'NodeChild', dependent: :destroy
+  has_many :node_parents, dependent: :destroy
+  has_many :parents, through: :node_parents
 
   # enum
   # node_top => 根节点（无父节点）

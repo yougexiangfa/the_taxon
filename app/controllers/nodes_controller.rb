@@ -5,6 +5,12 @@ class NodesController < ::Admin::BaseController
     @nodes = Node.all
   end
 
+  def top
+    @nodes = Node.select(:id, :name).all
+
+    render json: { results: @nodes.as_json }
+  end
+
   def show
   end
 
@@ -19,7 +25,7 @@ class NodesController < ::Admin::BaseController
     @node = Node.new(node_params)
 
     if @node.save
-      redirect_to @node, notice: 'Node was successfully created.'
+      redirect_to nodes_url, notice: 'Node was successfully created.'
     else
       render :new
     end
@@ -27,7 +33,7 @@ class NodesController < ::Admin::BaseController
 
   def update
     if @node.update(node_params)
-      redirect_to @node, notice: 'Node was successfully updated.'
+      redirect_to nodes_url, notice: 'Node was successfully updated.'
     else
       render :edit
     end
@@ -44,6 +50,8 @@ class NodesController < ::Admin::BaseController
   end
 
   def node_params
-    params.fetch(:node, {})
+    np = params.fetch(:node, {}).permit(:name, :description, :parent_ids)
+    np[:parent_ids] = np[:parent_ids].split(',')
+    np
   end
 end

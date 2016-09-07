@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   resources :nodes do
-    :node_parents
+    get :top, on: :collection
+    resources :node_parents
   end
 
 end
