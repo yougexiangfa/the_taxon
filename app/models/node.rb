@@ -8,11 +8,11 @@ class Node < ActiveRecord::Base
   # node_mid => 中间节点（既有父节点，亦有子节点）
   # node_bottom => 底节点（无子节点）
   enum node_type: [
-    :node_top,
-    :node_mid,
-    :node_bottom
+    :top,
+    :mid,
+    :bottom
   ]
-  scope :node_tops, -> { where(node_type: node_types[:node_top]) }
+  scope :node_tops, -> { where(node_type: :top) }
 
 
 
