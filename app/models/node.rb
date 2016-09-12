@@ -3,6 +3,9 @@ class Node < ActiveRecord::Base
   has_many :parents, through: :node_parents
   has_many :node_children, class_name: 'NodeParent', foreign_key: :parent_id
   has_many :children, through: :node_children, source: :child
+
+  has_many :faq_lists
+
   # enum
   # node_top => 根节点（无父节点）
   # node_mid => 中间节点（既有父节点，亦有子节点）
@@ -12,9 +15,10 @@ class Node < ActiveRecord::Base
     :mid,
     :bottom
   ]
-  scope :node_tops, -> { where(node_type: :top) }
 
+  def define_node
 
+  end
 
 end
 

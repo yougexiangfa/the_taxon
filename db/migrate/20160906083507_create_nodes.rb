@@ -3,7 +3,7 @@ class CreateNodes < ActiveRecord::Migration[5.0]
     create_table :nodes do |t|
       t.string :name
       t.string :description
-      t.integer :node_type
+      t.integer :node_type, default: 0
       t.timestamps
     end
 
