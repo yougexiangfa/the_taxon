@@ -5,6 +5,8 @@ module TheNodeModel
     serialize :parent_ids, Array
     serialize :child_ids, Array
 
+    #belongs_to :parent
+
     # enum
     # node_top => 根节点（无父节点）
     # node_mid => 中间节点（既有父节点，亦有子节点）
@@ -36,8 +38,8 @@ module TheNodeModel
   end
 
   def valid_parents
-    if parent_ids & (child_ids + [self.id])
-      errors.add 'Parents can not contain self and children'
+    unless (parent_ids & (child_ids + [self.id])).empty?
+      errors.add :parent_ids, 'Parents can not contain self and children'
     end
   end
 
