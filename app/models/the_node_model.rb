@@ -14,6 +14,8 @@ module TheNodeModel
       :mid,
       :bottom
     ]
+
+    scope :root, -> { where(child_ids: nil) }
   end
 
   def parents
@@ -22,6 +24,21 @@ module TheNodeModel
 
   def children
     self.class.where(id: child_ids)
+  end
+
+  def define_node
+
+
+    self.parents.each do |parent|
+      parent.child_ids << self.id
+      parent.save
+    end
+  end
+
+  def valid_parents
+    if parent_ids & (child_ids + [self.id])
+      errors.add 'Parents can not contain self and children'
+    end
   end
 
 end
