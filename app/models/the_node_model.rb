@@ -5,19 +5,11 @@ module TheNodeModel
     serialize :parent_ids, Array
     serialize :child_ids, Array
 
-    #belongs_to :parent
+    validate :valid_parents
 
-    # enum
-    # node_top => 根节点（无父节点）
-    # node_mid => 中间节点（既有父节点，亦有子节点）
-    # node_bottom => 底节点（无子节点）
-    enum node_type: [
-      :top,
-      :mid,
-      :bottom
-    ]
-
-    scope :root, -> { where(child_ids: nil) }
+    scope :root, -> { where(parent_ids: nil) }
+    scope :bottom, -> { where(child_ids: nil) }
+    before_save :define_node!, if: -> { parent_ids_changed? }
   end
 
   def parents
@@ -28,18 +20,45 @@ module TheNodeModel
     self.class.where(id: child_ids)
   end
 
-  def define_node
+  def define_node!
+    add_ids = parent_ids - parent_ids_was
+    remove_ids = parent_ids_was - parent_ids
 
+    self.class.where(id: add_ids).each do |parent|
+      parent.child_ids << self.id unless parent.child_ids.include? self.id
+      parent.save!
+    end
 
+    self.class.where(id: remove_ids).each do |parent|
+      parent.child_ids.delete self.id
+      parent.save!
+    end
+  end
+
+  def reset_child_ids
     self.parents.each do |parent|
-      parent.child_ids << self.id
+      parent.child_ids << self.id unless parent.child_ids.include? self.id
       parent.save
     end
   end
 
   def valid_parents
-    unless (parent_ids & (child_ids + [self.id])).empty?
-      errors.add :parent_ids, 'Parents can not contain self and children'
+    parent_ids.uniq!
+
+    if (parent_ids & child_ids).present?
+      errors.add :parent_ids, 'Parents can not contain children'
+    end
+
+    if parent_ids.include? self.id
+      errors.add :parent_ids, 'Parents can not contain self'
+    end
+
+    add_ids = parent_ids - parent_ids_was
+    add_ids.each do |i|
+      unless Node.exists?(i)
+        parent_ids.delete(i)
+        logger.info "Invalid parent id: #{i}"
+      end
     end
   end
 
@@ -52,5 +71,8 @@ end
 # :node_type,      :integer
 # :children_count, :integer, default: 0
 # :logo_id,    :string,  limit: 255
+
+# required fields
+# :parent_id
 # :parent_ids
 # :child_ids
