@@ -8,6 +8,11 @@ class NodesController < ::Admin::BaseController
   def top
     @nodes = Node.select(:id, :name).all
 
+    if params[:id]
+      @node = Node.find params[:id]
+      @nodes = @nodes.where.not(id: @node.invalid_parent_ids)
+    end
+
     render json: { results: @nodes.as_json }
   end
 

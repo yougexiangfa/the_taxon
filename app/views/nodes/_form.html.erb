@@ -14,9 +14,13 @@
 <% end %>
 
 <script>
+  var _url = '/nodes/top';
+  <% if @node.id %>
+    _url += '<%= "?id=#{@node.id}" %>';
+  <% end %>
   $('.ui.dropdown.search').dropdown({
     apiSettings: {
-      url: '/nodes/top',
+      url: _url,
       cache: false
     },
     fields: {

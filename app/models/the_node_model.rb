@@ -8,8 +8,9 @@ module TheNodeModel
     validate :valid_parents
 
     scope :root, -> { where(parent_ids: nil) }
-    scope :bottom, -> { where(child_ids: nil) }
-    before_save :define_node!, if: -> { parent_ids_changed? }
+    scope :bottom, -> { where(child_ids: nil).where.not(parent_ids: nil) }
+    after_save :define_node!, if: -> { parent_ids_changed? }
+    before_destroy :destroy_parent_child
   end
 
   def parents
@@ -25,7 +26,7 @@ module TheNodeModel
     remove_ids = parent_ids_was - parent_ids
 
     self.class.where(id: add_ids).each do |parent|
-      parent.child_ids << self.id unless parent.child_ids.include? self.id
+      parent.child_ids << self.id unless self.id && parent.child_ids.include?(self.id)
       parent.save!
     end
 
@@ -35,11 +36,27 @@ module TheNodeModel
     end
   end
 
+  def destroy_parent_child
+    parents.each do |parent|
+      parent.child_ids.delete self.id
+      parent.save
+    end
+
+    children.each do |child|
+      child.parent_ids.delete self.id
+      child.save
+    end
+  end
+
   def reset_child_ids
     self.parents.each do |parent|
       parent.child_ids << self.id unless parent.child_ids.include? self.id
       parent.save
     end
+  end
+
+  def invalid_parent_ids
+    self.child_ids + [self.id]
   end
 
   def valid_parents
