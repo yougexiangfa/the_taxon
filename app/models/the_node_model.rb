@@ -21,6 +21,14 @@ module TheNodeModel
     self.class.where(id: child_ids)
   end
 
+  def top?
+    parent_ids.blank?
+  end
+
+  def bottom?
+    child_ids.blank?
+  end
+
   def define_node!
     add_ids = parent_ids - parent_ids_was
     remove_ids = parent_ids_was - parent_ids
