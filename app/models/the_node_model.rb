@@ -25,6 +25,10 @@ module TheNodeModel
     parent_ids.blank?
   end
 
+  def middle?
+    parent_ids.present? && child_ids.present?
+  end
+
   def bottom?
     child_ids.blank?
   end
