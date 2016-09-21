@@ -1,33 +1,12 @@
 <%= default_form_for @node do |f| %>
   <%= f.text_field :name, label: '名称：' %>
   <%= f.text_field :description, label: '描述：' %>
-  <div class="inline field">
-    <label class="six wide field">Leader</label>
-    <div class="ui multiple search selection dropdown">
-      <%= f.hidden_field :parent_ids %>
-      <i class="dropdown icon"></i>
-      <input type="text" class="search" tabindex="0">
-      <div class="default text">'Search'</div>
-    </div>
-  </div>
+  <%= f.select :parent_ids, options_from_collection_for_select(@options, :id, :name, @node.parent_ids), { label: 'Parents' }, { multiple: true, class: 'ui multiple search selection dropdown' } %>
   <%= f.submit %>
 <% end %>
 
 <script>
-  var _url = '/nodes/top';
-  <% if @node.id %>
-    _url += '<%= "?id=#{@node.id}" %>';
-  <% end %>
   $('.ui.dropdown.search').dropdown({
-    apiSettings: {
-      url: _url,
-      cache: false
-    },
-    fields: {
-      name: 'name',
-      value: 'id',
-      text: 'name'
-    },
     debug: true
   });
 </script>

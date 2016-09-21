@@ -19,7 +19,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Created_at</th>
-      <th></th>
+      <th colspan="2"></th>
     </tr>
     </thead>
 
@@ -31,9 +31,7 @@
         <td><%= node.description %></td>
         <td><%= node.created_at.to_s %></td>
         <td>
-        </td>
-        <td>
-          <%= link_to '添加父类', new_node_node_parent_path(node), class: 'ui blue label', remote: true %>
+          <%= link_to '添加父类', new_node_path(parent_id: node.id), class: 'ui blue label', remote: true %>
         </td>
         <td>
           <%= link_to '编辑', edit_node_path(node), class: 'ui pink label', remote: true %>

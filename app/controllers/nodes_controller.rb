@@ -5,25 +5,16 @@ class NodesController < ::Admin::BaseController
     @nodes = Node.all
   end
 
-  def top
-    @nodes = Node.select(:id, :name).all
-
-    if params[:id]
-      @node = Node.find params[:id]
-      @nodes = @nodes.where.not(id: @node.invalid_parent_ids)
-    end
-
-    render json: { results: @nodes.as_json }
-  end
-
   def show
   end
 
   def new
     @node = Node.new
+    @options = Node.select(:id, :name).all
   end
 
   def edit
+    @options = Node.select(:id, :name).where.not(id: @node.invalid_parent_ids)
   end
 
   def create
@@ -55,8 +46,6 @@ class NodesController < ::Admin::BaseController
   end
 
   def node_params
-    np = params.fetch(:node, {}).permit(:name, :description, :parent_ids)
-    np[:parent_ids] = np[:parent_ids].split(',')
-    np
+    params.fetch(:node, {}).permit(:name, :description, parent_ids: [])
   end
 end
