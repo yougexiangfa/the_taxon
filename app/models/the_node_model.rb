@@ -7,9 +7,12 @@ module TheNodeModel
 
     validate :valid_parents
 
+    belongs_to :parent, class_name: name, foreign_key: :parent_id, optional: true
+
     scope :root, -> { where(parent_ids: nil) }
     scope :bottom, -> { where(child_ids: nil).where.not(parent_ids: nil) }
     after_save :define_node!, if: -> { parent_ids_changed? }
+    before_save :sync_parent, if: -> { parent_id_changed? }
     before_destroy :destroy_parent_child
   end
 
@@ -45,6 +48,13 @@ module TheNodeModel
     self.class.where(id: remove_ids).each do |parent|
       parent.child_ids.delete self.id
       parent.save!
+    end
+  end
+
+  def sync_parent
+    parent_ids.delete parent_id_was
+    if parent_id && !parent_ids.include?(parent_id)
+      parent_ids.unshift(parent_id)
     end
   end
 
