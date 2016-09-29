@@ -24,6 +24,14 @@ module TheNodeModel
     self.class.where(id: child_ids)
   end
 
+  def siblings
+    self_and_siblings - [self]
+  end
+
+  def self_and_siblings
+    parent ? parent.children : self.class.root
+  end
+
   def top?
     parent_ids.blank?
   end
