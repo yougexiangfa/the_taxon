@@ -90,7 +90,8 @@ module TheNodeModel
   end
 
   def valid_parents
-    parent_ids.to_a.uniq!
+    self.parent_ids = self.parent_ids.to_a
+    parent_ids.uniq!
 
     if (parent_ids & child_ids).present?
       errors.add :parent_ids, 'Parents can not contain children'
