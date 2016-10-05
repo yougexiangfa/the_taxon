@@ -2,8 +2,15 @@ module TheNodeModel
   extend ActiveSupport::Concern
 
   included do
-    serialize :parent_ids, Array
-    serialize :child_ids, Array
+    if connection.adapter_name == 'Mysql2'
+      serialize :parent_ids, Array
+      serialize :child_ids, Array
+    end
+
+    if connection.adapter_name == 'PostgreSQL'
+      attribute :parent_ids, :integer, array: true, default: []
+      attribute :child_ids, :integer, array: true, default: []
+    end
 
     validate :valid_parents
 
@@ -90,7 +97,6 @@ module TheNodeModel
   end
 
   def valid_parents
-    self.parent_ids = self.parent_ids.to_a
     parent_ids.uniq!
 
     if (parent_ids & child_ids).present?
