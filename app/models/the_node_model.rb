@@ -5,21 +5,23 @@ module TheNodeModel
     if connection.adapter_name == 'Mysql2'
       serialize :parent_ids, Array
       serialize :child_ids, Array
+      scope :root, -> { where(parent_ids: nil) }
+      scope :bottom, -> { where(child_ids: nil).where.not(parent_ids: nil) }
     end
 
     if connection.adapter_name == 'PostgreSQL'
       attribute :parent_ids, :integer, array: true, default: []
       attribute :child_ids, :integer, array: true, default: []
+      scope :root, -> { where(parent_ids: '{}') }
+      scope :bottom, -> { where(child_ids: '{}').where.not(parent_ids: '{}') }
     end
 
     validate :valid_parents
 
     belongs_to :parent, class_name: name, foreign_key: :parent_id, optional: true
 
-    scope :root, -> { where(parent_ids: nil) }
-    scope :bottom, -> { where(child_ids: nil).where.not(parent_ids: nil) }
-    after_save :define_node!, if: -> { parent_ids_changed? }
     before_save :sync_parent, if: -> { parent_id_changed? }
+    after_save :define_node!, if: -> { parent_ids_changed? }
     before_destroy :destroy_parent_child
   end
 
@@ -52,8 +54,8 @@ module TheNodeModel
   end
 
   def define_node!
-    add_ids = parent_ids - parent_ids_was
-    remove_ids = parent_ids_was - parent_ids
+    add_ids = parent_ids - parent_ids_was.to_a
+    remove_ids = parent_ids_was.to_a - parent_ids
 
     self.class.where(id: add_ids).each do |parent|
       parent.child_ids << self.id unless self.id && parent.child_ids.include?(self.id)
@@ -107,7 +109,7 @@ module TheNodeModel
       errors.add :parent_ids, 'Parents can not contain self'
     end
 
-    add_ids = parent_ids - parent_ids_was
+    add_ids = parent_ids - parent_ids_was.to_a
     add_ids.each do |i|
       unless Node.exists?(i)
         parent_ids.delete(i)
