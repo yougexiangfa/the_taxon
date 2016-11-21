@@ -37,8 +37,12 @@ module TheNodeModel
     self_and_siblings - [self]
   end
 
-  def self_and_siblings
-    parent ? parent.children : self.class.root
+  def self_and_siblings(pid = nil)
+    if pid
+      self.class.find(pid).children
+    else
+      parent ? parent.children : self.class.root
+    end
   end
 
   def top?
