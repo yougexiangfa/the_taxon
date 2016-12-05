@@ -44,6 +44,7 @@ module TheNodeModel
   def top?
     parent_ids.blank?
   end
+  alias :root? :top?
 
   def middle?
     parent_ids.present? && child_ids.present?
