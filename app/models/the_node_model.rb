@@ -33,12 +33,31 @@ module TheNodeModel
     self.class.where(id: child_ids)
   end
 
+  def descendant_ids(c_ids = child_ids)
+    @descendant_ids ||= c_ids.dup
+    get_ids = self.class.where(id: c_ids).pluck(:child_ids).flatten
+    if get_ids.present?
+      @descendant_ids.concat get_ids
+      descendant_ids(get_ids)
+    else
+      @descendant_ids
+    end
+  end
+
+  def descendants
+    self.class.where(id: descendant_ids)
+  end
+
   def siblings
     self_and_siblings - [self]
   end
 
-  def self_and_siblings
-    parent ? parent.children : self.class.root
+  def self_and_siblings(pid = nil)
+    if pid
+      self.class.find(pid).children
+    else
+      parent ? parent.children : self.class.root
+    end
   end
 
   def top?
