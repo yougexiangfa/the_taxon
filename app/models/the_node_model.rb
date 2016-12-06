@@ -48,6 +48,10 @@ module TheNodeModel
     self.class.where(id: descendant_ids)
   end
 
+  def self_and_descendants
+    self.class.where(id: descendant_ids + [self.id])
+  end
+
   def siblings
     self_and_siblings - [self]
   end
