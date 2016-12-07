@@ -1,26 +1,26 @@
-module TheNodeModel
+module TheReferenceModel
   extend ActiveSupport::Concern
 
   included do
     if connection.adapter_name == 'Mysql2'
-      serialize :child_ids, Array
-      scope :root, -> { where(parent_id: nil) }
-      scope :bottom, -> { where(child_ids: nil).where.not(parent_id: nil) }
+      serialize :relate_ids, Array
     end
 
     if connection.adapter_name == 'PostgreSQL'
-      attribute :child_ids, :integer, array: true, default: []
-      scope :root, -> { where(parent_id: nil) }
-      scope :bottom, -> { where(child_ids: '{}').where.not(parent_id: nil) }
+      attribute :relate_ids, :integer, array: true, default: []
     end
+
+    validate :valid_parents
 
     belongs_to :parent, class_name: name, foreign_key: :parent_id, optional: true
 
     before_save :sync_parent, if: -> { parent_id_changed? }
     after_save :define_node!, if: -> { parent_ids_changed? }
     before_destroy :destroy_parent_child
+  end
 
-    validate :valid_parents
+  def relate
+    self.class.where(id: relate_ids)
   end
 
   def children
@@ -63,12 +63,12 @@ module TheNodeModel
   end
 
   def top?
-    parent_id.nil?
+    relate_ids.blank?
   end
   alias :root? :top?
 
   def middle?
-    parent_id.present? && child_ids.present?
+    relate_ids.present? && child_ids.present?
   end
 
   def bottom?
@@ -76,8 +76,8 @@ module TheNodeModel
   end
 
   def define_node!
-    add_ids = parent_ids - parent_ids_was.to_a
-    remove_ids = parent_ids_was.to_a - parent_ids
+    add_ids = relate_ids - parent_ids_was.to_a
+    remove_ids = parent_ids_was.to_a - relate_ids
 
     self.class.where(id: add_ids).each do |parent|
       parent.child_ids << self.id unless self.id && parent.child_ids.include?(self.id)
@@ -90,6 +90,13 @@ module TheNodeModel
     end
   end
 
+  def sync_parent
+    relate_ids.delete parent_id_was
+    if parent_id && !relate_ids.include?(parent_id)
+      relate_ids.unshift(parent_id)
+    end
+  end
+
   def destroy_parent_child
     parents.each do |parent|
       parent.child_ids.delete self.id
@@ -97,7 +104,7 @@ module TheNodeModel
     end
 
     children.each do |child|
-      child.parent_ids.delete self.id
+      child.relate_ids.delete self.id
       child.save
     end
   end
@@ -114,20 +121,20 @@ module TheNodeModel
   end
 
   def valid_parents
-    parent_ids.uniq!
+    relate_ids.uniq!
 
-    if (parent_ids & child_ids).present?
-      errors.add :parent_ids, 'Parents can not contain children'
+    if (relate_ids & child_ids).present?
+      errors.add :relate_ids, 'Parents can not contain children'
     end
 
-    if parent_ids.include? self.id
-      errors.add :parent_ids, 'Parents can not contain self'
+    if relate_ids.include? self.id
+      errors.add :relate_ids, 'Parents can not contain self'
     end
 
-    add_ids = parent_ids - parent_ids_was.to_a
+    add_ids = relate_ids - parent_ids_was.to_a
     add_ids.each do |i|
       unless Node.exists?(i)
-        parent_ids.delete(i)
+        relate_ids.delete(i)
         logger.info "Invalid parent id: #{i}"
       end
     end
@@ -145,5 +152,5 @@ end
 
 # required fields
 # :parent_id
-# :parent_ids
+# :relate_ids
 # :child_ids
