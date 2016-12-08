@@ -4,27 +4,22 @@ module TheNodeModel
   included do
     if connection.adapter_name == 'Mysql2'
       serialize :child_ids, Array
-      scope :root, -> { where(parent_id: nil) }
       scope :bottom, -> { where(child_ids: nil).where.not(parent_id: nil) }
     end
 
     if connection.adapter_name == 'PostgreSQL'
       attribute :child_ids, :integer, array: true, default: []
-      scope :root, -> { where(parent_id: nil) }
       scope :bottom, -> { where(child_ids: '{}').where.not(parent_id: nil) }
     end
 
-    belongs_to :parent, class_name: name, foreign_key: :parent_id, optional: true
+    scope :root, -> { where(parent_id: nil) }
+    scope :roots, -> { root }
 
-    before_save :sync_parent, if: -> { parent_id_changed? }
-    after_save :define_node!, if: -> { parent_ids_changed? }
+    belongs_to :parent, class_name: name, foreign_key: 'parent_id', optional: true
+    has_many :children, class_name:  name, foreign_key: 'parent_id', inverse_of: :parent
+
+    after_save :define_node!, if: -> { parent_id_changed? }
     before_destroy :destroy_parent_child
-
-    validate :valid_parents
-  end
-
-  def children
-    self.class.where(id: child_ids)
   end
 
   def descendant_ids(c_ids = child_ids)
@@ -47,7 +42,24 @@ module TheNodeModel
   end
 
   def ancestor_ids
+    node, node_ids = self, []
+    while node.parent_id
+      node_ids << node.parent_id
+      node = node.parent
+    end
+    node_ids
+  end
 
+  def ancestors
+    self.class.where(id: ancestor_ids)
+  end
+
+  def root
+    self.class.find_by(id: ancestor_ids.last)
+  end
+
+  def self_and_ancestors
+    self.class.where(id: ancestor_ids + [self.id])
   end
 
   def siblings
@@ -76,61 +88,24 @@ module TheNodeModel
   end
 
   def define_node!
-    add_ids = parent_ids - parent_ids_was.to_a
-    remove_ids = parent_ids_was.to_a - parent_ids
+    new_parent = self.class.find_by(id: parent_id)
+    new_parent.child_ids << self.id unless self.id && new_parent.child_ids.include?(self.id)
 
-    self.class.where(id: add_ids).each do |parent|
-      parent.child_ids << self.id unless self.id && parent.child_ids.include?(self.id)
-      parent.save!
-    end
+    old_parent = self.class.find_by(id: parent_id_was)
+    old_parent.child_ids.delete self.id
 
-    self.class.where(id: remove_ids).each do |parent|
-      parent.child_ids.delete self.id
-      parent.save!
-    end
+    new_parent&.save!
+    old_parent&.save!
   end
 
   def destroy_parent_child
-    parents.each do |parent|
-      parent.child_ids.delete self.id
-      parent.save
-    end
-
-    children.each do |child|
-      child.parent_ids.delete self.id
-      child.save
-    end
+    parent.child_ids.delete self.id
+    parent.save!
   end
 
   def reset_child_ids
-    self.parents.each do |parent|
-      parent.child_ids << self.id unless parent.child_ids.include? self.id
-      parent.save
-    end
-  end
-
-  def invalid_parent_ids
-    self.child_ids + [self.id]
-  end
-
-  def valid_parents
-    parent_ids.uniq!
-
-    if (parent_ids & child_ids).present?
-      errors.add :parent_ids, 'Parents can not contain children'
-    end
-
-    if parent_ids.include? self.id
-      errors.add :parent_ids, 'Parents can not contain self'
-    end
-
-    add_ids = parent_ids - parent_ids_was.to_a
-    add_ids.each do |i|
-      unless Node.exists?(i)
-        parent_ids.delete(i)
-        logger.info "Invalid parent id: #{i}"
-      end
-    end
+    self.child_ids = children_ids
+    self.save
   end
 
 end
