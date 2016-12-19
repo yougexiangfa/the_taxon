@@ -10,7 +10,7 @@ module TheNodeModel
 
   def descendant_ids(c_ids = child_ids)
     @descendant_ids ||= c_ids.dup
-    get_ids = self.class.where(id: c_ids).pluck(:child_ids).flatten
+    get_ids = self.class.where(parent_id: c_ids).pluck(:id).flatten
     if get_ids.present?
       @descendant_ids.concat get_ids
       descendant_ids(get_ids)
@@ -56,7 +56,7 @@ module TheNodeModel
     if pid
       self.class.find(pid).children
     else
-      parent ? parent.children : self.class.root
+      parent ? parent.children : self.class.roots
     end
   end
 
