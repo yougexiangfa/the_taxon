@@ -2,24 +2,10 @@ module TheNodeModel
   extend ActiveSupport::Concern
 
   included do
-    if connection.adapter_name == 'Mysql2'
-      serialize :child_ids, Array
-      scope :bottom, -> { where(child_ids: nil).where.not(parent_id: nil) }
-    end
-
-    if connection.adapter_name == 'PostgreSQL'
-      attribute :child_ids, :integer, array: true, default: []
-      scope :bottom, -> { where(child_ids: '{}').where.not(parent_id: nil) }
-    end
-
-    scope :root, -> { where(parent_id: nil) }
-    scope :roots, -> { root }
-
-    belongs_to :parent, class_name: name, foreign_key: 'parent_id', optional: true
-    has_many :children, class_name:  name, foreign_key: 'parent_id', inverse_of: :parent
-
-    after_save :define_node!, if: -> { parent_id_changed? }
-    before_destroy :destroy_parent_child
+    scope :leaves, -> { where(children_count: 0).where.not(parent_id: nil) }
+    scope :roots, -> { where(parent_id: nil) }
+    belongs_to :parent, class_name: name, foreign_key: 'parent_id', counter_cache: :children_count, optional: true, inverse_of: :children
+    has_many :children, class_name: name, foreign_key: 'parent_id', inverse_of: :parent
   end
 
   def descendant_ids(c_ids = child_ids)
@@ -74,39 +60,18 @@ module TheNodeModel
     end
   end
 
-  def top?
+  def root?
     parent_id.nil?
   end
-  alias :root? :top?
 
   def middle?
-    parent_id.present? && child_ids.present?
+    parent_id.present? && children_count > 0
   end
 
   def bottom?
-    child_ids.blank?
+    children_count.zero?
   end
 
-  def define_node!
-    new_parent = self.class.find_by(id: parent_id)
-    new_parent.child_ids << self.id unless self.id && new_parent.child_ids.include?(self.id)
-
-    old_parent = self.class.find_by(id: parent_id_was)
-    old_parent.child_ids.delete self.id
-
-    new_parent&.save!
-    old_parent&.save!
-  end
-
-  def destroy_parent_child
-    parent.child_ids.delete self.id
-    parent.save!
-  end
-
-  def reset_child_ids
-    self.child_ids = children_ids
-    self.save
-  end
 
 end
 
