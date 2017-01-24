@@ -1,4 +1,4 @@
-class Node < ActiveRecord::Base
+class Node < ApplicationRecord
   include TheNodeModel
-  #acts_as_tree
+
 end

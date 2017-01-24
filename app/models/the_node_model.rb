@@ -85,5 +85,3 @@ end
 
 # required fields
 # :parent_id
-# :parent_ids
-# :child_ids
