@@ -1,7 +1,7 @@
 <%= default_form_for @node do |f| %>
   <%= f.text_field :name, label: '名称：' %>
   <%= f.text_field :description, label: '描述：' %>
-  <%= f.select :parent_ids, options_from_collection_for_select(@options, :id, :name, @node.parent_ids), { label: 'Parents' }, { multiple: true, class: 'ui multiple search selection dropdown' } %>
+  <%= f.select :parent_id, options_from_collection_for_select(@options, :id, :name, @node.parent_id), { label: 'Parents' }, { class: 'ui search selection dropdown' } %>
   <%= f.submit %>
 <% end %>
 

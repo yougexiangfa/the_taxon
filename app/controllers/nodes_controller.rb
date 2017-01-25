@@ -2,7 +2,7 @@ class NodesController < ::Admin::BaseController
   before_action :set_node, only: [:show, :edit, :update, :destroy]
 
   def index
-    @nodes = Node.all
+    @nodes = Node.page(params[:page])
   end
 
   def show
@@ -14,7 +14,7 @@ class NodesController < ::Admin::BaseController
   end
 
   def edit
-    @options = Node.select(:id, :name).where.not(id: @node.invalid_parent_ids)
+    @options = Node.select(:id, :name)
   end
 
   def create
@@ -46,6 +46,7 @@ class NodesController < ::Admin::BaseController
   end
 
   def node_params
-    params.fetch(:node, {}).permit(:name, :description, parent_ids: [])
+    params.fetch(:node, {}).permit(:name, :description, :parent_id)
   end
+
 end
