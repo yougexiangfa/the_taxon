@@ -33,15 +33,15 @@ module TheNodeModel
       node_ids << node.parent_id
       node = node.parent
     end
-    node_ids
+    node_ids.reverse
   end
 
   def ancestors
-    self.class.where(id: ancestor_ids)
+    self.class.unscope(:order).find(ancestor_ids)
   end
 
   def root
-    self.class.find_by(id: ancestor_ids.last)
+    self.class.find_by(id: ancestor_ids.first)
   end
 
   def self_and_ancestors
