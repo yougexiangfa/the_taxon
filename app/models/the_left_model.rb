@@ -1,23 +1,12 @@
-module TheReferModel
+module TheLeftModel
   extend ActiveSupport::Concern
 
   included do
-    if connection.adapter_name == 'Mysql2'
-      serialize :refer_ids, Array
-    end
-
-    if connection.adapter_name == 'PostgreSQL'
-      attribute :refer_ids, :integer, array: true, default: []
-    end
-
-    validate :valid_refers
+    Refer.belogns_to :left, class_name: name
+    has_many :refers, foreign_key: :left_id
   end
 
-  def refers
-    self.class.where(id: refer_ids)
-  end
-
-  def valid_refers
+  def valid_lefts
     refer_ids.uniq!
 
     if (refer_ids & child_ids).present?
