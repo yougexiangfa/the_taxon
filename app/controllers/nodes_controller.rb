@@ -9,7 +9,7 @@ class NodesController < ::Admin::BaseController
   end
 
   def new
-    @node = Node.new
+    @node = Node.new(parent_id: params[:parent_id])
     @options = Node.select(:id, :name).all
   end
 
