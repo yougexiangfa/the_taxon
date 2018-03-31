@@ -2,6 +2,7 @@ module TheNodeModel
   extend ActiveSupport::Concern
 
   included do
+    has_closure_tree
     scope :leaves, -> { where(children_count: 0).where.not(parent_id: nil) }
     scope :roots, -> { where(parent_id: nil) }
     belongs_to :parent, class_name: name, foreign_key: 'parent_id', counter_cache: :children_count, optional: true, inverse_of: :children
@@ -19,14 +20,6 @@ module TheNodeModel
     end
   end
 
-  def descendants
-    self.class.where(id: descendant_ids)
-  end
-
-  def self_and_descendants
-    self.class.where(id: descendant_ids + [self.id])
-  end
-
   def ancestor_ids
     node, node_ids = self, []
     while node.parent_id
@@ -38,10 +31,6 @@ module TheNodeModel
 
   def ancestors
     self.class.unscope(:order).find(ancestor_ids)
-  end
-
-  def root
-    self.class.find_by(id: ancestor_ids.first)
   end
 
   def self_and_ancestors
@@ -60,10 +49,6 @@ module TheNodeModel
     end
   end
 
-  def root?
-    parent_id.nil?
-  end
-
   def middle?
     parent_id.present? && children_count > 0
   end
@@ -71,7 +56,6 @@ module TheNodeModel
   def bottom?
     children_count.zero?
   end
-
 
 end
 
