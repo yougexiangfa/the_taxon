@@ -1,0 +1,14 @@
+<div class="inline fields">
+  <%= f.label :parent_ancestors %>
+  <% if f.object.parent_id %>
+    <% f.object.ancestors.reverse_each do |depart| %>
+      <div class="two wide field">
+        <%= f.collection_select "parent_ancestors(#{depart.depth}i)", depart.self_and_siblings, :id, :name, { selected: depart.id, include_blank: true, label: false, on: { wrapper_all: false, wrapper_input: false } }, { data: { id: depart.id.to_i, title: 'parent_ancestors' } } %>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="two wide field">
+      <%= f.collection_select "parent_ancestors(0i)", @parents, :id, :name, { prompt: 'Select', label: false, on: { wrapper_all: false, wrapper_input: false } }, { data: { id: 0, title: 'parent_ancestors' } } %>
+    </div>
+  <% end %>
+</div>
