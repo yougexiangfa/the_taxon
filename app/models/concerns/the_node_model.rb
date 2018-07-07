@@ -6,6 +6,19 @@ module TheNodeModel
     attribute :parent_ancestors
   end
 
+  def depth_str
+    (0..self.class.max_depth - self.depth).to_a.reverse.join
+  end
+
+  module ClassMethods
+
+    def max_depth
+      self.hierarchy_class.maximum(:generations).to_i + 1
+    end
+
+  end
+
+
   # def descendant_ids(c_ids = child_ids)
   #   @descendant_ids ||= c_ids.dup
   #   get_ids = self.class.where(parent_id: c_ids).pluck(:id).flatten
