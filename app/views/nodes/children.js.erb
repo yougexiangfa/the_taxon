@@ -1,0 +1,24 @@
+<% form_object = default_form_object(@new_node) %>
+<% if @node.children.present? %>
+var template = '<%= j(render partial: 'children_form', locals: { f: form_object, node: @node.children.first }) %>'
+if ($('#parent_wrapper_<%=  @node.depth %>').next().length > 0) {
+  $('#parent_wrapper_<%= @node.depth %>').next().replaceWith(template);
+} else {
+  $('#parent_wrapper_<%= @node.depth %>').after(template);
+}
+$("#<%= @node.class.name.underscore %>_parent_ancestors\\(<%= @node.depth + 1 %>i\\)").dropdown({
+  placeholder: false,
+  onChange: function (value, text, $selectedItem) {
+    var search_path = '/nodes/children';
+    var search_url = new URL(window.location.origin + search_path);
+    search_url.searchParams.set('node_id', value);
+    search_url.searchParams.set('node_type', this.dataset['type'])
+    
+    fetch_xhr_script(search_url);
+  }
+});
+<% else %>
+if ($('#parent_wrapper_<%= @node.depth %>').next().length > 0) {
+  $('#parent_wrapper_<%= @node.depth %>').nextAll().replaceWith('');
+}
+<% end %>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
-  resources :nodes
+  resources :nodes, only: [:index] do
+    get :children, on: :collection
+  end
 
 end
