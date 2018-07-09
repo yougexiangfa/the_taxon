@@ -4,5 +4,5 @@
                         :id,
                         :name,
                         { include_blank: 'Select', label: false, on: { wrapper_all: false, wrapper_input: false } },
-                        { data: { type: outer.classify, title: "#{outer}_ancestors" } } %>
+                        { data: { outer: f.object.class.name, type: outer.classify, title: 'outer_ancestors' } } %>
 </div>

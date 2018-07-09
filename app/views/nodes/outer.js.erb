@@ -1,24 +1,25 @@
-<% form_object = default_form_object(@member) %>
+<% form_object = default_form_object(@new_node) %>
 <% if @department %>
-var template = '<%= j(render partial: 'department_form', locals: { f: form_object }) %>'
-if ($('#member_department_wrapper_<%= params[:previous_id] %>').next().length > 0) {
-  $('#member_department_wrapper_<%= params[:previous_id] %>').next().replaceWith(template);
+var template = '<%= j(render partial: 'outer_options', locals: { f: form_object }) %>'
+if ($('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').next().length > 0) {
+  $('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').next().replaceWith(template);
 } else {
-  $('#member_department_wrapper_<%= params[:previous_id] %>').after(template);
+  $('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').after(template);
 }
-$("#member_department_id_<%= params[:department_id] %>").dropdown({
+$('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').dropdown({
   placeholder: false,
   onChange: function (value, text, $selectedItem) {
     var search_path = '/nodes/outer';
     var search_url = new URL(window.location.origin + search_path);
     search_url.searchParams.set('node_id', value);
     search_url.searchParams.set('node_type', this.dataset['type'])
-    
+    search_url.searchParams.set('outer_type', this.dataset['outer'])
+
     fetch_xhr_script(search_url);
   }
 });
 <% else %>
-if ($('#member_department_wrapper_<%= params[:previous_id] %>').next().length > 0) {
-  $('#member_department_wrapper_<%= params[:previous_id] %>').nextAll().replaceWith('');
+if ($('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').next().length > 0) {
+  $('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').nextAll().replaceWith('');
 }
 <% end %>

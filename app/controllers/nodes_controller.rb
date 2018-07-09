@@ -1,6 +1,6 @@
 class NodesController < ApplicationController
-  before_action :set_node, only: [ :children ]
-  skip_before_action :verify_authenticity_token, only: [:children] #todo removed
+  before_action :set_node, only: [:children, :outer]
+  skip_before_action :verify_authenticity_token, only: [:children, :outer]
 
   def index
     @nodes = Node.page(params[:page])
@@ -12,13 +12,6 @@ class NodesController < ApplicationController
 
   def outer
     @new_node = params[:outer_type].constantize.new
-    @member = Member.new
-    if params[:department_id].present?
-      @departments = Department.where(parent_id: params[:department_id])
-    else
-      @departments = Department.none
-    end
-    @department = @departments.first
   end
 
   def new
