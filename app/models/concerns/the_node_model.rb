@@ -15,6 +15,11 @@ module TheNodeModel
     self.parent_id = self.parent_ancestors&.values.to_a.compact.last
   end
 
+  #
+  def middle?
+    parent_id.present? && depth < self.class.max_depth
+  end
+
   module ClassMethods
 
     def max_depth
@@ -42,11 +47,6 @@ module TheNodeModel
   #     node = node.parent
   #   end
   #   node_ids.reverse
-  # end
-
-  #
-  # def middle?
-  #   parent_id.present? && children_count > 0
   # end
 
 end
