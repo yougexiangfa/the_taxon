@@ -15,7 +15,6 @@ module TheNodeModel
     self.parent_id = self.parent_ancestors&.values.to_a.compact.last
   end
 
-  #
   def middle?
     parent_id.present? && depth < self.class.max_depth
   end
