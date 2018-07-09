@@ -2,9 +2,9 @@
   <%= f.label :parent_ancestors %>
   <% if f.object.parent_id %>
     <% f.object.ancestors.reverse_each do |node| %>
-      <%= render partial: 'nodes/children_form', locals: { f: f, node: node } %>
+      <%= render partial: 'nodes/children_options', locals: { f: f, node: node } %>
     <% end %>
   <% else %>
-    <%= render partial: 'nodes/children_form', locals: { f: f, node: f.object.class.root } %>
+    <%= render partial: 'nodes/children_options', locals: { f: f, node: f.object.class.root } %>
   <% end %>
 </div>

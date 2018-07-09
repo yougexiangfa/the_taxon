@@ -5,6 +5,6 @@
       <%= render partial: 'nodes/outer_options', locals: { f: f, node: node, outer: outer } %>
     <% end %>
   <% else %>
-    <%= render partial: 'nodes/outer_options', locals: { f: f, node: f.object.send("#{outer}").class.root, outer: outer } %>
+    <%= render partial: 'nodes/outer_options', locals: { f: f, node: outer.classify.constantize.root, outer: outer } %>
   <% end %>
 </div>
