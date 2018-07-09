@@ -4,10 +4,15 @@ module TheNodeModel
   included do
     has_closure_tree
     attribute :parent_ancestors
+    before_save :sync_parent_id
   end
 
   def depth_str
     (0..self.class.max_depth - self.depth).to_a.reverse.join
+  end
+
+  def sync_parent_id
+    self.parent_id = self.parent_ancestors&.values.to_a.compact.last
   end
 
   module ClassMethods
