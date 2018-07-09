@@ -1,12 +1,12 @@
 <% form_object = default_form_object(@new_node) %>
-<% if @department %>
-var template = '<%= j(render partial: 'outer_options', locals: { f: form_object }) %>'
-if ($('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').next().length > 0) {
-  $('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').next().replaceWith(template);
+<% if @node.children.present? %>
+var template = '<%= j(render partial: 'outer_options', locals: { f: form_object, node: @node.children.first, outer: params[:outer_type].underscore }) %>'
+if ($('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').next().length > 0) {
+  $('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').next().replaceWith(template);
 } else {
-  $('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').after(template);
+  $('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').after(template);
 }
-$('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').dropdown({
+$('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').dropdown({
   placeholder: false,
   onChange: function (value, text, $selectedItem) {
     var search_path = '/nodes/outer';
@@ -19,7 +19,7 @@ $('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').dropdown(
   }
 });
 <% else %>
-if ($('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').next().length > 0) {
-  $('#<%= params[:outer_type].underscore %>_wrapper_<%= @node.depth %>').nextAll().replaceWith('');
+if ($('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').next().length > 0) {
+  $('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').nextAll().replaceWith('');
 }
 <% end %>
