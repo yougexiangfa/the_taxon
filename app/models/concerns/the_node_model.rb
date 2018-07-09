@@ -51,13 +51,5 @@ module TheNodeModel
 
 end
 
-# 开始属性列表
-# :name,           :string,  limit: 50
-# :content,        :text,    limit: 65535
-# :status,         :integer, default: 0
-# :node_type,      :integer
-# :children_count, :integer, default: 0
-# :logo_id,    :string,  limit: 255
-
 # required fields
 # :parent_id
