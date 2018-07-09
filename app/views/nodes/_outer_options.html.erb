@@ -1,0 +1,8 @@
+<div class="two wide field" id="outer_wrapper_<%= node.depth %>">
+<%= f.collection_select "#{outer}_ancestors(#{node.depth}i)",
+                        node.self_and_siblings,
+                        :id,
+                        :name,
+                        { include_blank: 'Select', label: false, on: { wrapper_all: false, wrapper_input: false } },
+                        { data: { type: outer.classify, title: "#{outer}_ancestors" } } %>
+</div>

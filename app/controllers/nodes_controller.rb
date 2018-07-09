@@ -10,6 +10,17 @@ class NodesController < ApplicationController
     @new_node = params[:node_type].constantize.new
   end
 
+  def outer
+    @new_node = params[:outer_type].constantize.new
+    @member = Member.new
+    if params[:department_id].present?
+      @departments = Department.where(parent_id: params[:department_id])
+    else
+      @departments = Department.none
+    end
+    @department = @departments.first
+  end
+
   def new
     @node = Node.new(parent_id: params[:parent_id])
     @options = Node.select(:id, :name).all

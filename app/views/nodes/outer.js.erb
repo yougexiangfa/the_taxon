@@ -1,0 +1,24 @@
+<% form_object = default_form_object(@member) %>
+<% if @department %>
+var template = '<%= j(render partial: 'department_form', locals: { f: form_object }) %>'
+if ($('#member_department_wrapper_<%= params[:previous_id] %>').next().length > 0) {
+  $('#member_department_wrapper_<%= params[:previous_id] %>').next().replaceWith(template);
+} else {
+  $('#member_department_wrapper_<%= params[:previous_id] %>').after(template);
+}
+$("#member_department_id_<%= params[:department_id] %>").dropdown({
+  placeholder: false,
+  onChange: function (value, text, $selectedItem) {
+    var search_path = '/nodes/outer';
+    var search_url = new URL(window.location.origin + search_path);
+    search_url.searchParams.set('node_id', value);
+    search_url.searchParams.set('node_type', this.dataset['type'])
+    
+    fetch_xhr_script(search_url);
+  }
+});
+<% else %>
+if ($('#member_department_wrapper_<%= params[:previous_id] %>').next().length > 0) {
+  $('#member_department_wrapper_<%= params[:previous_id] %>').nextAll().replaceWith('');
+}
+<% end %>
