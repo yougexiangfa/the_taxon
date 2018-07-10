@@ -1,4 +1,4 @@
-module TheLeftModel
+module TheRightModel
   extend ActiveSupport::Concern
 
   included do
