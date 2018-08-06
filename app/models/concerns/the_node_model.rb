@@ -1,10 +1,10 @@
 module TheNodeModel
   extend ActiveSupport::Concern
 
-  included do
-    has_closure_tree
-    attribute :parent_ancestors
-    before_save :sync_parent_id
+  def self.prepended(model)
+    model.has_closure_tree
+    model.attribute :parent_ancestors
+    model.before_save :sync_parent_id
   end
 
   def depth_str
@@ -20,6 +20,14 @@ module TheNodeModel
 
   def middle?
     parent_id.present? && depth < self.class.max_depth
+  end
+
+  def depth
+    if parent
+      parent.depth + 1
+    else
+      super
+    end
   end
 
   def sheer_descendant_ids(c_ids = child_ids)
