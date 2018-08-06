@@ -1,10 +1,13 @@
 module TheNodeModel
-  extend ActiveSupport::Concern
 
   def self.prepended(model)
     model.has_closure_tree
     model.attribute :parent_ancestors
     model.before_save :sync_parent_id
+
+    def model.max_depth
+      self.hierarchy_class.maximum(:generations).to_i + 1
+    end
   end
 
   def depth_str
@@ -49,14 +52,6 @@ module TheNodeModel
       node = node.parent
     end
     node_ids
-  end
-
-  module ClassMethods
-
-    def max_depth
-      self.hierarchy_class.maximum(:generations).to_i + 1
-    end
-
   end
 
 end
