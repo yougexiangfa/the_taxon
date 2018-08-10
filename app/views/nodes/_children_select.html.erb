@@ -5,6 +5,6 @@
       <%= render partial: 'nodes/children_options', locals: { f: f, node: node } %>
     <% end %>
   <% else %>
-    <%= render partial: 'nodes/children_options', locals: { f: f, node: f.object.class.root } %>
+    <%= render partial: 'nodes/children_options', locals: { f: f, node: f.object.class.new } %>
   <% end %>
 </div>

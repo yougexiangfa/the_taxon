@@ -6,7 +6,7 @@ $('[data-title="parent_ancestors"]').dropdown({
     var search_path = '/nodes/children';
     var search_url = new URL(window.location.origin + search_path);
     search_url.searchParams.set('node_id', value);
-    search_url.searchParams.set('node_type', this.dataset['type'])
+    search_url.searchParams.set('node_type', this.dataset['type']);
 
     fetch_xhr_script(search_url);
   }

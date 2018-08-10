@@ -6,7 +6,7 @@ if ($('#parent_wrapper_<%= @node.depth %>').next().length > 0) {
 } else {
   $('#parent_wrapper_<%= @node.depth %>').after(template);
 }
-$("#<%= @node.class.name.underscore %>_parent_ancestors\\(<%= @node.depth + 1 %>i\\)").dropdown({
+$("#<%= @node.class.base_class.name.underscore %>_parent_ancestors\\(<%= @node.depth + 1 %>i\\)").dropdown({
   placeholder: false,
   onChange: function (value, text, $selectedItem) {
     var search_path = '/nodes/children';
