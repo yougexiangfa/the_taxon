@@ -1,11 +1,8 @@
 <% form_object = default_form_object(@new_node) %>
 <% if @node.children.present? %>
 var template = '<%= j(render partial: 'outer_options', locals: { f: form_object, node: @node.children.build, outer: params[:node_type].underscore }) %>'
-if ($('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').next().length > 0) {
-  $('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').next().replaceWith(template);
-} else {
-  $('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').after(template);
-}
+$('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').nextAll().remove();
+$('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').after(template);
 $("#<%= params[:outer_type].underscore %>_<%= params[:node_type].underscore %>_ancestors\\(<%= @node.depth + 1 %>i\\)").dropdown({
   placeholder: false,
   onChange: function (value, text, $selectedItem) {
@@ -20,6 +17,6 @@ $("#<%= params[:outer_type].underscore %>_<%= params[:node_type].underscore %>_a
 });
 <% else %>
 if ($('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').next().length > 0) {
-  $('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').nextAll().replaceWith('');
+  $('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').nextAll().remove();
 }
 <% end %>

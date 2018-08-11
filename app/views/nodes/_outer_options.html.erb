@@ -4,5 +4,5 @@
                         :id,
                         :name,
                         { selected: node.id, include_blank: 'Select', label: false, on: { wrapper_all: false, wrapper_input: false } },
-                        { data: { outer: f.object.class.name, type: outer.classify, title: 'outer_ancestors' } } %>
+                        { data: { outer: f.object.class.base_class.name, type: outer.classify, title: 'outer_ancestors' } } %>
 </div>
