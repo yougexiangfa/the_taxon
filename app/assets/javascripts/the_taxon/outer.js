@@ -6,8 +6,8 @@ $('[data-title="outer_ancestors"]').dropdown({
     var search_path = '/nodes/outer';
     var search_url = new URL(window.location.origin + search_path);
     search_url.searchParams.set('node_id', value);
-    search_url.searchParams.set('node_type', this.dataset['type'])
-    search_url.searchParams.set('outer_type', this.dataset['outer'])
+    search_url.searchParams.set('node_type', this.dataset['type']);
+    search_url.searchParams.set('outer_type', this.dataset['outer']);
 
     fetch_xhr_script(search_url);
   }

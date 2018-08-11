@@ -12,6 +12,7 @@ class NodesController < ApplicationController
 
   def outer
     @new_node = params[:outer_type].constantize.new
+    binding.pry
   end
 
   def new

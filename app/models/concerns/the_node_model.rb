@@ -8,6 +8,15 @@ module TheNodeModel
     def model.max_depth
       self.hierarchy_class.maximum(:generations).to_i + 1
     end
+
+    def model.extract_multi_attributes(pairs)
+      _real = {}
+      r = self.new.send :extract_callstack_for_multiparameter_attributes, pairs
+      r.each do |k, v|
+        _real[k.sub(/ancestors$/, 'id')] = v.values.compact.last
+      end
+      _real
+    end
   end
 
   def depth_str
