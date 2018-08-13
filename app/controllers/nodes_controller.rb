@@ -1,6 +1,6 @@
 class NodesController < ApplicationController
-  before_action :set_node, only: [:children, :outer]
-  skip_before_action :verify_authenticity_token, only: [:children, :outer]
+  before_action :set_node, only: [:children, :outer, :outer_search]
+  skip_before_action :verify_authenticity_token, only: [:children, :outer, :outer_search]
 
   def index
     @nodes = Node.page(params[:page])
@@ -11,6 +11,10 @@ class NodesController < ApplicationController
   end
 
   def outer
+    @entity = params[:entity_type].classify.constantize.new
+  end
+
+  def outer_search
     @entity = params[:entity_type].classify.constantize.new
   end
 
