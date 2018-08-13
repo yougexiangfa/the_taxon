@@ -1,11 +1,6 @@
-<% f.object.each do |name, value| %>
-  <% node = outer.classify.constantize.find(value) %>
-  <div class="two wide field" id="<%= "#{outer}_wrapper_#{node.depth}" %>">
-    <%= f.collection_select name,
-                            node.self_and_siblings,
-                            :id,
-                            :name,
-                            { selected: node.id, include_blank: 'Select', label: false, on: { wrapper_all: false, wrapper_input: false } },
-                            { data: { outer: outer, type: outer.classify, title: 'outer_ancestors' } } %>
-  </div>
+
+
+
+<% node.self_and_ancestors.reverse_each do |node| %>
+  <%= render partial: 'nodes/outer_options', locals: { f: f, node: node } %>
 <% end %>

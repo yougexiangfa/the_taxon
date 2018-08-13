@@ -11,7 +11,7 @@ class NodesController < ApplicationController
   end
 
   def outer
-    @new_node = params[:outer_type].constantize.new
+    @entity = params[:entity_type].classify.constantize.new
   end
 
   def new

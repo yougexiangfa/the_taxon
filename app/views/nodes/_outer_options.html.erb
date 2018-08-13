@@ -1,8 +1,8 @@
-<div class="two wide field" id="<%= "#{outer}_wrapper_#{node.depth}" %>">
-  <%= f.collection_select "#{outer}_ancestors(#{node.depth}i)",
+<div class="two wide field" id="<%= "#{node.class.base_class.name.underscore}_wrapper_#{node.depth}" %>">
+  <%= f.collection_select "#{node.class.base_class.name.underscore}_ancestors(#{node.depth}i)",
                           node.self_and_siblings,
                           :id,
                           :name,
                           { selected: node.id, include_blank: 'Select', label: false, on: { wrapper_all: false, wrapper_input: false } },
-                          { data: { outer: f.object.class.base_class.name, type: outer.classify, title: 'outer_ancestors' } } %>
+                          { data: { entity_type: f.object.class.base_class.name, node_type: node.class.base_class.name, title: 'node_ancestors' } } %>
 </div>
