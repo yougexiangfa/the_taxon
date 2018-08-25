@@ -5,10 +5,14 @@ $('[data-title="node_ancestors"]').dropdown({
   onChange: function(value, text, $selectedItem){
     var search_path = '/nodes/outer_search';
     var search_url = new URL(window.location.origin + search_path);
-    search_url.searchParams.set('node_id', value);
-    search_url.searchParams.set('node_type', this.dataset['nodeType']);
-    search_url.searchParams.set('entity_type', this.dataset['entityType']);
+    if (value) {
+      search_url.searchParams.set('node_id', value);
+      search_url.searchParams.set('node_type', this.dataset['nodeType']);
+      search_url.searchParams.set('entity_type', this.dataset['entityType']);
 
-    fetch_xhr_script(search_url);
+      fetch_xhr_script(search_url);
+    } else {
+      $(this).parent().parent().nextAll().remove();
+    }
   }
 });
