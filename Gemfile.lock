@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    the_taxon (0.0.1)
-      closure_tree
-      rails (>= 5.0)
+    rails_taxon (0.0.1)
+      closure_tree (~> 6.6)
+      rails (>= 5.0, <= 6.0)
 
 GEM
   remote: https://rubygems.org/
@@ -126,7 +126,7 @@ PLATFORMS
 
 DEPENDENCIES
   rails (>= 5.2.0)
-  the_taxon!
+  rails_taxon!
 
 BUNDLED WITH
    1.16.3

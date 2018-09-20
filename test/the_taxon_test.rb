@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class TheTaxonTest < ActiveSupport::TestCase
+class RailsTaxonTest < ActiveSupport::TestCase
   test "truth" do
-    assert_kind_of Module, TheTaxon
+    assert_kind_of Module, RailsTaxon
   end
 end

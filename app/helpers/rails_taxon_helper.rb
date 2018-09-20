@@ -1,4 +1,4 @@
-module TheTaxonHelper
+module RailsTaxonHelper
 
   def draw_tree(node, partial:)
     str = ''
