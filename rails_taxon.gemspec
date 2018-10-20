@@ -20,5 +20,5 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency 'rails', '>= 5.0', '<= 6.0'
-  s.add_dependency 'closure_tree', '~> 6.6'
+  s.add_dependency 'closure_tree', '>= 6.6', '<= 7.1'
 end
