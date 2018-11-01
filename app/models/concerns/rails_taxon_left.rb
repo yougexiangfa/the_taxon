@@ -1,4 +1,4 @@
-module TheLeftModel
+module RailsTaxonLeft
   extend ActiveSupport::Concern
 
   included do

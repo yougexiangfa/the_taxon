@@ -1,4 +1,4 @@
-module TheRightModel
+module RailsTaxonRight
   extend ActiveSupport::Concern
 
   included do

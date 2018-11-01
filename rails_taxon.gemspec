@@ -1,4 +1,4 @@
-$:.push File.expand_path("../lib", __FILE__)
+$:.push File.expand_path('lib', __dir__)
 require 'rails_taxon/version'
 
 Gem::Specification.new do |s|
@@ -6,10 +6,10 @@ Gem::Specification.new do |s|
   s.version = RailsTaxon::VERSION
   s.authors = ['qinmingyuan']
   s.email = ['mingyuan0715@foxmail.com']
-  s.homepage = 'https://github.com/yougexiangfa/rails_taxon'
-  s.summary = "Summary of RailsTaxon."
-  s.description = "Description of RailsTaxon."
-  s.license = "LGPL-3.0"
+  s.homepage = 'https://github.com/work-design/rails_taxon'
+  s.summary = 'Taxon helpers with closure true'
+  s.description = 'Taxon helpers with closure true'
+  s.license = 'LGPL-3.0'
 
   s.files = Dir[
     '{app,config,db,lib}/**/*',
