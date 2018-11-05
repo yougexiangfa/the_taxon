@@ -28,6 +28,8 @@ module RailsTaxonNode
     _parent_id = self.parent_ancestors&.values.to_a.compact.last
     if _parent_id
       self.parent_id = _parent_id
+    else
+      self.parent_id = nil
     end
   end
 
