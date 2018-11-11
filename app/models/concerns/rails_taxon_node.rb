@@ -25,7 +25,8 @@ module RailsTaxonNode
   end
 
   def sync_parent_id
-    _parent_id = self.parent_ancestors&.values.to_a.compact.last
+    return unless parent_ancestors
+    _parent_id = self.parent_ancestors.values.to_a.compact.last
     if _parent_id
       self.parent_id = _parent_id
     else
