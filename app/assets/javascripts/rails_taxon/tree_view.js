@@ -1,13 +1,21 @@
 function collapse(el){
-  var par = $(el).parent().parent()
-  var selector = 'tr[data-depth$="' + par.data('depth') + '"]'
-  par.nextUntil(selector).hide()
-  $(el).replaceWith('<a onclick="expand(this)" href="javascript:void(0)"><i class="grey caret right icon"></i></a>')
+  var par = $(el).parent().parent();
+  var selector = 'tr[data-depth$="' + par.data('depth') + '"]';
+  par.nextUntil(selector).hide();
+  $(el).replaceWith('<i class="grey caret right icon link"></i>')
 }
 
 function expand(el){
   var par = $(el).parent().parent()
-  var selector = 'tr[data-depth$="' + par.data('depth') + '"]'
+  var selector = 'tr[data-depth$="' + par.data('depth') + '"]';
   par.nextUntil(selector).show()
-  $(el).replaceWith('<a onclick="collapse(this)" href="javascript:void(0)"><i class="grey caret down icon"></i></a>')
+  $(el).replaceWith('<i class="grey caret down icon link"></i>')
 }
+
+document.querySelectorAll('.grey.caret.down.icon.link').addEventListener('click', function(e){
+  collapse(e.target);
+});
+
+document.querySelectorAll('.grey.caret.right.icon.link').addEventListener('click', function(e){
+  expand(e.target);
+});
