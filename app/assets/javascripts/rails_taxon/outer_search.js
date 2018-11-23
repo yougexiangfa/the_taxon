@@ -1,5 +1,3 @@
-//= require rails_com/fetch_xhr_script
-
 $('[data-title="node_ancestors"]').dropdown({
   placeholder: false,
   onChange: function(value, text, $selectedItem){
@@ -10,7 +8,7 @@ $('[data-title="node_ancestors"]').dropdown({
       search_url.searchParams.set('node_type', this.dataset['nodeType']);
       search_url.searchParams.set('entity_type', this.dataset['entityType']);
 
-      fetch_xhr_script(search_url);
+      Rails.ajax({url: search_url, type: 'GET', dataType: 'script'});
     } else {
       $(this).parent().parent().nextAll().remove();
     }

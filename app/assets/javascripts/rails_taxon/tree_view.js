@@ -1,3 +1,4 @@
+// jQuery: nextUntil
 function collapse(el){
   var par = el.parentNode.parentNode;
   var selector = 'tr[data-depth$="' + par.dataset['depth'] + '"]';
