@@ -1,0 +1,4 @@
+<%= render 'shared/error_messages', target: @tag %>
+<%= f.text_field :name %>
+<%= f.select :type, options_for_select(Tag.options_i18n(:type), @tag.type) %>
+<%= f.submit %>

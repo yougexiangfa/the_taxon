@@ -1,0 +1,11 @@
+<div class="ui segment breadcrumb">
+  <%= link_to 'Back', admin_tags_path, class: 'section' %>
+  <div class="divider">/</div>
+  <div class="active section">Edit</div>
+</div>
+
+<div class="ui segment">
+  <%= form_with model: @tag, scope: :tag, url: admin_tag_path(@tag), local: true do |f| %>
+    <%= render partial: 'form', locals: { f: f } %>
+  <% end %>
+</div>

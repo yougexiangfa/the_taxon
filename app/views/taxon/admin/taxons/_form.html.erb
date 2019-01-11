@@ -1,0 +1,8 @@
+<%= render 'shared/error_messages', target: @taxon %>
+<%= f.select :type, options_for_select(Taxon.options_i18n(:type), @taxon.type) %>
+<%= f.text_field :name %>
+<%= f.text_field :description %>
+<%= f.number_field :position %>
+<%= f.color_field :color %>
+<%= f.file_field :cover, direct_upload: true %>
+<%= f.submit %>

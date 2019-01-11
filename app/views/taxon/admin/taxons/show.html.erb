@@ -1,0 +1,26 @@
+<div class="ui segment breadcrumb">
+  <%= link_to 'Back', admin_app_taxons_path, class: 'section' %>
+  <div class="divider"> / </div>
+  <div class="active section">Show</div>
+</div>
+
+<table class="ui very basic large table">
+  <tbody>
+    <tr>
+      <td class="right aligned"><%= AppTaxon.human_attribute_name(:name) %></td>
+      <td><%= @app_taxon.name %></td>
+    </tr>
+    <tr>
+      <td class="right aligned"><%= AppTaxon.human_attribute_name(:description) %></td>
+      <td><%= @app_taxon.description %></td>
+    </tr>
+    <tr>
+      <td class="right aligned"><%= AppTaxon.human_attribute_name(:position) %></td>
+      <td><%= @app_taxon.position %></td>
+    </tr>
+    <tr>
+      <td class="right aligned"><%= AppTaxon.human_attribute_name(:apps_count) %></td>
+      <td><%= @app_taxon.apps_count %></td>
+    </tr>
+  </tbody>
+</table>
