@@ -1,2 +1,5 @@
+require 'acts_as_list'
+require 'closure_tree'
+require 'rails_com'
 require 'rails_taxon/engine'
 require 'rails_taxon/config'

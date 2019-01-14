@@ -1,4 +1,5 @@
 class Taxon < ApplicationRecord
+  has_closure_tree
   acts_as_list
 
   has_one_attached :cover

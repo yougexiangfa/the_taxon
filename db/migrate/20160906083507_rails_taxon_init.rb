@@ -8,6 +8,7 @@ class RailsTaxonInit < ActiveRecord::Migration[5.0]
       t.string :description
       t.integer :position, default: 1
       t.integer :entities_count, default: 0
+      t.references :parent
       t.timestamps
     end
 
