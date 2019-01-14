@@ -12,6 +12,14 @@ class RailsTaxonInit < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
+    create_table :taxon_hierarchies, id: false do |t|
+      t.integer :ancestor_id, null: false
+      t.integer :descendant_id, null: false
+      t.integer :generations, null: false
+      t.index [:ancestor_id, :descendant_id, :generations], unique: true, name: 'taxon_anc_desc_idx'
+      t.index [:descendant_id], name: 'taxon_desc_idx'
+    end
+
     create_table :tags do |t|
       t.string :name
       t.string :type
