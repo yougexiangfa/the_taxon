@@ -3,7 +3,7 @@ class Taxon < ApplicationRecord
   acts_as_list
 
   has_one_attached :cover
-  
+
   scope :hot, -> { order(position: :asc) }
 
   def cover_url
