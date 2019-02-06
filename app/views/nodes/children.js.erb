@@ -11,7 +11,7 @@ $("#<%= @node.class.base_class.name.underscore %>_parent_ancestors\\(<%= @node.d
     search_url.searchParams.set('node_id', value);
     search_url.searchParams.set('node_type', this.dataset['type'])
     
-    fetch_xhr_script(search_url);
+    Rails.ajax({url: search_url, type: 'GET', dataType: 'script'});
   }
 });
 <% else %>

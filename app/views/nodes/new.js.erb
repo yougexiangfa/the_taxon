@@ -1,7 +1,3 @@
-if ($('.ui.modals').length === 0) {
-  $('body').append('<%= j(render 'new') %>');
-} else {
-  $('.ui.modals').html('<%= j(render 'new') %>');
-}
+$('#modal').html('<%= j(render 'new') %>');
 
-$('.ui.modal').modal('setting', {autofocus: false}).modal('show');
+$('#modal').modal('setting', {autofocus: false}).modal('show');

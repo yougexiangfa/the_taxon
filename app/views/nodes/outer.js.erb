@@ -13,7 +13,7 @@ $("#<%= params[:entity_type].underscore %>_<%= params[:node_type].underscore %>_
       search_url.searchParams.set('node_type', this.dataset['nodeType'])
       search_url.searchParams.set('entity_type', this.dataset['entityType'])
 
-      fetch_xhr_script(search_url);
+      Rails.ajax({url: search_url, type: 'GET', dataType: 'script'});
     } else {
       $(this).parent().parent().nextAll().remove();
     }
