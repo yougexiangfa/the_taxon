@@ -1,6 +1,6 @@
 module RailsTaxon::ActiveRecord
 
-  def has_taxons(**columns)
+  def has_taxons(*columns)
     columns.each do |column|
       attribute "#{column}_ancestors"
       class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
