@@ -1,6 +1,6 @@
 <div class="two wide field" id="parent_wrapper_<%= node.depth %>">
   <%= f.collection_select "parent_ancestors(#{node.depth}i)",
-                          node.self_and_siblings,
+                          node.self_and_siblings.where(default_params),
                           :id,
                           :name,
                           { selected: node.id, include_blank: 'Select', label: false, on: { wrapper_all: false, wrapper_input: false } },
