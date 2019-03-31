@@ -1,4 +1,4 @@
-<% form_object = default_form_object(@new_node) %>
+<% form_object = default_form_object(@new_node, index: params[:index]) %>
 <% if @node.children.present? %>
 var template = '<%= j(render partial: 'children_options', locals: { f: form_object, node: @node.children.build }) %>'
 $('#parent_wrapper_<%= @node.depth %>').nextAll().remove();
