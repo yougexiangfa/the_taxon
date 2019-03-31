@@ -1,27 +1,12 @@
 <% form_object = default_form_object(@entity, index: params[:index]) %>
 
 <% if @node.children.present? %>
-var template = '<%= j(render partial: 'outer_options', locals: { f: form_object, node: @node.children.build }) %>'
-$('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').nextAll().remove();
-$('#<%= form_object.wrapper_input_id(params[:node_type].underscore) %>').after(template);
-$("#<%= params[:entity_type].underscore %>_<%= params[:node_type].underscore %>_ancestors\\(<%= @node.depth + 1 %>i\\)").dropdown({
-  placeholder: false,
-  onChange: function (value, text, $selectedItem) {
-    var search_path = '/nodes/outer';
-    var search_url = new URL(window.location.origin + search_path);
-    if (value) {
-      search_url.searchParams.set('node_id', value);
-      search_url.searchParams.set('node_type', this.dataset['nodeType'])
-      search_url.searchParams.set('entity_type', this.dataset['entityType'])
-
-      Rails.ajax({url: search_url, type: 'GET', dataType: 'script'});
-    } else {
-      $(this).parent().parent().nextAll().remove();
-    }
-  }
-});
+  var template = '<%= j(render partial: 'outer_options', locals: { f: form_object, node: @node.children.build }) %>'
+  $('#<%= params[:node_type].underscore %>_wrapper_<%= @node.depth %>').nextAll().remove();
+  $('#<%= form_object.wrapper_input_id(params[:method]).gsub('(', '\\\\(').gsub(')', "\\\)") %>').after(template);
+  remote_js_load(<%= raw remote_js_load %>)
 <% else %>
-if ($('#<%= form_object.wrapper_input_id(params[:node_type].underscore) %>').next().length > 0) {
-  $('#<%= form_object.wrapper_input_id(params[:node_type].underscore) %>').nextAll().remove();
-}
+  if ($('#<%= form_object.wrapper_input_id(params[:node_type].underscore) %>').next().length > 0) {
+    $('#<%= form_object.wrapper_input_id(params[:node_type].underscore) %>').nextAll().remove();
+  }
 <% end %>
