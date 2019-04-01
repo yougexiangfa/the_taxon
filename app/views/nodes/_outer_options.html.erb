@@ -5,5 +5,5 @@
                           :id,
                           :name,
                           { selected: node.id, include_blank: 'Select', label: false, on: { wrapper_all: false, wrapper_input: false } },
-                          { data: { entity_type: f.object.class.base_class.name, node_type: node.class.base_class.name, index: f.index, method: f_method, title: 'node_ancestors' } } %>
+                          { data: { entity_type: f.object.class.base_class.name, node_type: node.class.base_class.name, index: f.index, as: f.object_name, method: f_method, title: 'node_ancestors' } } %>
 </div>
