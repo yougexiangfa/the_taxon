@@ -1,21 +1,16 @@
 <% form_object = default_form_object(@new_node, index: params[:index]) %>
+<% f_method = form_object.wrapper_input_id(params[:method]).gsub('(', '\(').gsub(')', '\)') %>
 <% if @node.children.present? %>
+
 var template = '<%= j(render partial: 'children_options', locals: { f: form_object, node: @node.children.build }) %>'
-$('#parent_wrapper_<%= @node.depth %>').nextAll().remove();
-$('#parent_wrapper_<%= @node.depth %>').after(template);
-$("#<%= @node.class.base_class.name.underscore %>_parent_ancestors\\(<%= @node.depth + 1 %>i\\)").dropdown({
-  placeholder: false,
-  onChange: function (value, text, $selectedItem) {
-    var search_path = '/nodes/children';
-    var search_url = new URL(window.location.origin + search_path);
-    search_url.searchParams.set('node_id', value);
-    search_url.searchParams.set('node_type', this.dataset['type'])
-    
-    Rails.ajax({url: search_url, type: 'GET', dataType: 'script'});
-  }
-});
+$('#<%= j f_method %>').nextAll().remove();
+$('#<%= j f_method %>').after(template);
+remote_js_load(<%= raw remote_js_load %>)
+
 <% else %>
-if ($('#parent_wrapper_<%= @node.depth %>').next().length > 0) {
-  $('#parent_wrapper_<%= @node.depth %>').nextAll().remove();
+
+if ($('#<%= j f_method %>').next().length > 0) {
+  $('#<%= j f_method %>').nextAll().remove();
 }
+
 <% end %>
