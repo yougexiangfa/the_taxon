@@ -7,9 +7,11 @@ $('[data-title="node_ancestors"]').dropdown({
       search_url.searchParams.set('node_id', value);
       search_url.searchParams.set('node_type', this.dataset['nodeType']);
       search_url.searchParams.set('entity_type', this.dataset['entityType']);
-      search_url.searchParams.set('index', this.dataset['index']);
       search_url.searchParams.set('as', this.dataset['as']);
       search_url.searchParams.set('method', this.dataset['method']);
+      if (this.dataset['index']) {
+        search_url.searchParams.set('index', this.dataset['index']);
+      }
 
       Rails.ajax({url: search_url, type: 'GET', dataType: 'script'});
     } else {
