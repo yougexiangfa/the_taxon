@@ -2,7 +2,7 @@ module RailsTaxonNode
 
   def self.prepended(model)
     model.has_closure_tree
-    model.attribute :parent_ancestors
+    model.attribute :parent_ancestors, :integer, array: true
     model.before_save :sync_parent_id
 
     def model.max_depth
