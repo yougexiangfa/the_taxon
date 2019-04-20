@@ -30,10 +30,10 @@
       <td><%= tag.taggeds_count %></td>
       <td class="ui labels">
         <%= link_to admin_tag_path(tag), data: { tooltip: t('.show') }, class: 'ui blue mini icon button' do %>
-          <i class="location arrow icon"></i>
+          <i class="fas fa-eye"></i>
         <% end %>
         <%= link_to edit_admin_tag_path(tag), data: { tooltip: t('.edit') }, class: 'ui pink mini icon button' do %>
-          <i class="pencil alternate icon"></i>
+          <i class="fas fa-pencil-alt"></i>
         <% end %>
         <%= link_to admin_tag_path(tag), method: :delete, data: { tooltip: t('.destroy'), confirm: t('.confirm') }, class: 'ui red mini icon button' do %>
           <i class="times icon"></i>
