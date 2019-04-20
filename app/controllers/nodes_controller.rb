@@ -1,4 +1,4 @@
-class NodesController < RailsTaxon.config.app_class.constantize
+class NodesController < RailsTaxon.config.app_controller.constantize
   before_action :set_node, only: [:children, :outer, :outer_search]
   skip_before_action :verify_authenticity_token, only: [:children, :outer, :outer_search]
 

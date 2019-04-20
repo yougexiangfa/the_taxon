@@ -4,9 +4,9 @@ module RailsTaxon
   include ActiveSupport::Configurable
 
   configure do |config|
-    config.admin_class = 'AdminController'
-    config.my_class = 'MyController'
-    config.app_class = 'ApplicationController'
+    config.admin_controller = 'AdminController'
+    config.my_controller = 'MyController'
+    config.app_controller = 'ApplicationController'
     config.disabled_models = []
   end
 
