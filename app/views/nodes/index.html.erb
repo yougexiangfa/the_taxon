@@ -1,5 +1,5 @@
 <div class="three wide column">
-  
+
 </div>
 
 <div class="thirteen wide column">
@@ -35,7 +35,7 @@
         </td>
         <td>
           <%= link_to '编辑', edit_node_path(node), class: 'ui pink label', remote: true %>
-          <%= link_to '删除', node_path(node), method: :delete, data: { confirm: 'Are you sure?' }, class: 'ui red label' %>
+          <%= link_to '删除', node_path(node), method: :delete, data: { confirm: t('.confirm') }, class: 'ui red label' %>
         </td>
       </tr>
     <% end %>
