@@ -16,7 +16,7 @@ class Taxon::Admin::TagsController < Taxon::Admin::BaseController
     @tag = Tag.new(tag_params)
 
     if @tag.save
-      redirect_to admin_tags_url, notice: 'Tag was successfully created.'
+      redirect_to admin_tags_url
     else
       render :new
     end
@@ -30,7 +30,7 @@ class Taxon::Admin::TagsController < Taxon::Admin::BaseController
 
   def update
     if @tag.update(tag_params)
-      redirect_to admin_tags_url, notice: 'Tag was successfully updated.'
+      redirect_to admin_tags_url
     else
       render :edit
     end
@@ -38,7 +38,7 @@ class Taxon::Admin::TagsController < Taxon::Admin::BaseController
 
   def destroy
     @tag.destroy
-    redirect_to admin_tags_url, notice: 'Tag was successfully destroyed.'
+    redirect_to admin_tags_url
   end
 
   private

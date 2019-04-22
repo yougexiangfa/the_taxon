@@ -14,7 +14,7 @@ class Taxon::Admin::TaxonsController < Taxon::Admin::BaseController
     @taxon = Taxon.new(taxon_params)
 
     if @taxon.save
-      redirect_to admin_taxons_url, notice: 'App taxon was successfully created.'
+      redirect_to admin_taxons_url
     else
       render :new
     end
@@ -28,7 +28,7 @@ class Taxon::Admin::TaxonsController < Taxon::Admin::BaseController
 
   def update
     if @taxon.update(taxon_params)
-      redirect_to admin_taxons_url, notice: 'App taxon was successfully updated.'
+      redirect_to admin_taxons_url
     else
       render :edit
     end
@@ -36,7 +36,7 @@ class Taxon::Admin::TaxonsController < Taxon::Admin::BaseController
 
   def destroy
     @taxon.destroy
-    redirect_to admin_taxons_url, notice: 'App taxon was successfully destroyed.'
+    redirect_to admin_taxons_url
   end
 
   private
