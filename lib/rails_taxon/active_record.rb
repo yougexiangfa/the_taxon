@@ -4,7 +4,7 @@ module RailsTaxon::ActiveRecord
     columns.each do |column|
       attribute "#{column}_ancestors"
       class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
-        before_save :sync_#{column}_id, if: -> { #{column}_ancestors_changed? }
+        before_validation :sync_#{column}_id, if: -> { #{column}_ancestors_changed? }
         
         def sync_#{column}_id
           self.#{column}_id = #{column}_ancestors.values.compact.last
