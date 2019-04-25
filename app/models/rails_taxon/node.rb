@@ -1,4 +1,4 @@
-module RailsTaxonNode
+module RailsTaxon::Node
 
   def self.prepended(model)
     model.has_closure_tree

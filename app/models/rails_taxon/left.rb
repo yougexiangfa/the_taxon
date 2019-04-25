@@ -1,12 +1,12 @@
-module RailsTaxonRight
+module RailsTaxon::Left
   extend ActiveSupport::Concern
 
   included do
-    Refer.belogns_to :right, class_name: name
-    has_many :refers, foreign_key: :right_id
+    Refer.belogns_to :left, class_name: name
+    has_many :refers, foreign_key: :left_id
   end
 
-  def valid_rights
+  def valid_lefts
     refer_ids.uniq!
 
     if (refer_ids & child_ids).present?
