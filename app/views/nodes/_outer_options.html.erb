@@ -1,5 +1,5 @@
 <% f_method = "#{node.class.base_class.name.underscore}_ancestors(#{node.depth}i)" %>
-<div class="two wide field" id="<%= f.wrapper_input_id(f_method) %>" data-title="node_ancestors_input">
+<div class="field" id="<%= f.wrapper_input_id(f_method) %>" data-title="node_ancestors_input">
   <%= f.collection_select f_method,
                           node.self_and_siblings.default_where(default_params),
                           :id,
