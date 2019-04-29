@@ -4,6 +4,6 @@
                           node.self_and_siblings.default_where(default_params),
                           :id,
                           :name,
-                          { selected: node.id, prompt: true, label: false, on: { wrapper_all: false, wrapper_input: false } },
+                          { selected: node.id, include_blank: true, label: false, on: { wrapper_all: false, wrapper_input: false } },
                           { data: { entity_type: f.object.class.base_class.name, node_type: node.class.base_class.name, index: f.index, as: f.object_name, method: f_method, title: 'node_ancestors' } } %>
 </div>
