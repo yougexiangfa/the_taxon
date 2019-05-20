@@ -1,7 +1,7 @@
 <% f_method = "parent_ancestors(#{node.depth}i)" %>
 <div class="field" id="<%= f.wrapper_input_id(f_method) %>" data-title="parent_ancestors_input">
   <%= f.collection_select f_method,
-                          node.children,
+                          node.self_and_siblings.default_where(default_params),
                           :id,
                           :name,
                           { selected: node.id, include_blank: true, label: false, on: { wrapper_all: false, wrapper_input: false } },
