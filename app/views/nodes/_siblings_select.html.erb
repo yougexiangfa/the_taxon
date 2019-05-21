@@ -1,8 +1,8 @@
 <div class="inline fields">
   <%= f.label :parent_ancestors %>
   <% if f.object.ancestors.present? %>
-    <% f.object.ancestors.reverse_each do |node| %>
-      <%= render partial: 'nodes/siblings_options', locals: { f: f, node: node } %>
+    <% f.object.ancestors.reverse_each do |item| %>
+      <%= render partial: 'nodes/siblings_options', locals: { f: f, node: item } %>
     <% end %>
   <% else %>
     <%= render partial: 'nodes/siblings_options', locals: { f: f, node: node } %>
