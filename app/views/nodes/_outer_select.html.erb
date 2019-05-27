@@ -1,5 +1,5 @@
 <div class="inline fields">
-  <%= f.label "#{outer}" %>
+  <%= f.label "#{outer}_id" %>
   <% if f.object.public_send("#{outer}_id") %>
     <% f.object.public_send("#{outer}").self_and_ancestors.reverse_each do |node| %>
       <%= render partial: 'nodes/outer_options', locals: { f: f, node: node } %>
