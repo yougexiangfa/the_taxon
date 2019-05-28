@@ -1,4 +1,4 @@
-module RailsTaxonHelper
+module RailsTaxon::TreeHelper
 
   # first locals must be node
   def draw_tree(partial: , object: )
