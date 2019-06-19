@@ -12,6 +12,7 @@ module RailsTaxon::Node
   end
 
   def sync_parent_id
+    return if new_record? && self.parent_id
     _parent_id = Hash(parent_ancestors).values.compact.last
     if _parent_id
       self.parent_id = _parent_id
