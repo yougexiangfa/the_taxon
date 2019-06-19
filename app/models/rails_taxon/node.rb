@@ -1,23 +1,10 @@
 module RailsTaxon::Node
-
-  def self.prepended(model)
-    model.has_closure_tree
-    model.attribute :parent_ancestors
-    model.before_save :sync_parent_id
-
-    def model.max_depth
-      self.hierarchy_class.maximum(:generations).to_i + 1
-    end
-
-    def model.extract_multi_attributes(pairs)
-      _pairs = pairs.select { |k, _| k.include?('(') }
-      _real = {}
-      r = self.new.send :extract_callstack_for_multiparameter_attributes, _pairs
-      r.each do |k, v|
-        _real[k.sub(/ancestors$/, 'id')] = v.values.compact.last
-      end
-      _real
-    end
+  extend ActiveSupport::Concern
+  
+  included do
+    has_closure_tree
+    attribute :parent_ancestors, :json
+    before_validation :sync_parent_id
   end
 
   def depth_str
@@ -64,6 +51,23 @@ module RailsTaxon::Node
       node = node.parent
     end
     node_ids
+  end
+  
+  class_methods do
+    
+    def max_depth
+      self.hierarchy_class.maximum(:generations).to_i + 1
+    end
+  
+    def extract_multi_attributes(pairs)
+      _pairs = pairs.select { |k, _| k.include?('(') }
+      _real = {}
+      r = self.new.send :extract_callstack_for_multiparameter_attributes, _pairs
+      r.each do |k, v|
+        _real[k.sub(/ancestors$/, 'id')] = v.values.compact.last
+      end
+      _real
+    end
   end
 
 end
