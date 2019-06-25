@@ -7,7 +7,6 @@ module RailsTaxon
     config.admin_controller = 'AdminController'
     config.my_controller = 'MyController'
     config.app_controller = 'ApplicationController'
-    config.disabled_models = []
   end
 
 end
