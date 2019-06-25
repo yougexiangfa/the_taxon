@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :nodes, only: [:index] do
+  resources :nodes, only: [] do
     get :children, on: :collection
     get :outer, on: :collection
     get :outer_search, on: :collection
