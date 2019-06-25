@@ -2,9 +2,9 @@
   <%= f.label "#{outer}_id" %>
   <% if f.object.public_send("#{outer}_id") %>
     <% f.object.public_send("#{outer}").self_and_ancestors.reverse_each do |node| %>
-      <%= render partial: 'nodes/outer_options', locals: { f: f, node: node } %>
+      <%= render partial: 'nodes/outer_options', locals: { f: f, node: node, depth: node.depth } %>
     <% end %>
   <% else %>
-    <%= render partial: 'nodes/outer_options', locals: { f: f, node: (class_name ||= outer).classify.constantize.new } %>
+    <%= render partial: 'nodes/outer_options', locals: { f: f, node: (class_name ||= outer).classify.constantize.new, depth: 0 } %>
   <% end %>
 </div>

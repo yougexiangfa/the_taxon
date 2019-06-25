@@ -2,7 +2,7 @@
 <% f_method = form_object.wrapper_input_id(params[:method]).gsub('(', '\(').gsub(')', '\)') %>
 
 <% if @node.children.present? %>
-  var template = '<%= j(render partial: 'outer_options', locals: { f: form_object, node: @node.children.build }) %>'
+  var template = '<%= j(render partial: 'outer_options', locals: { f: form_object, node: @node.children.build, depth: @node.depth + 1 }) %>'
   $('#<%= j f_method %>').nextAll('[data-title="node_ancestors_input"]').remove();
   $('#<%= j f_method %>').after(template);
   remote_js_load(<%= raw remote_js_load %>)
