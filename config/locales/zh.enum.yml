@@ -1,0 +1,6 @@
+zh:
+  activerecord:
+    enum:
+      tag:
+        type:
+          UserTag: 用户标签

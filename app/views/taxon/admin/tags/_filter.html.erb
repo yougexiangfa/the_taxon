@@ -4,9 +4,9 @@
     <%= f.submit %>
   </div>
 <% end %>
-
+<div class="ui divider"></div>
 <dl>
-  <dt><%= Tag.human_attribute_name(:type) %>:</dt>
+  <dt><%= Tag.human_attribute_name(:type) %></dt>
   <dd>
     <%= link_to 'All', filter_params(except: [:type]), class: active_params(type: '', active_class: 'ui basic blue button', item_class: 'ui basic white button') %>
     <% Tag.options_i18n(:type).each do |text, value| %>

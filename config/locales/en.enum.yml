@@ -1,0 +1,6 @@
+en:
+  activerecord:
+    enum:
+      tag:
+        type:
+          UserTag: User Tag
