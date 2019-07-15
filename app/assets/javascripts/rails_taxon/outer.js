@@ -15,7 +15,7 @@ $('[data-title="node_ancestors"]').dropdown({
 
       Rails.ajax({url: search_url, type: 'GET', dataType: 'script'});
     } else {
-      $(this).parent().parent().nextAll().remove();
+      $(this).parent().parent().nextAll('[data-title="node_ancestors_input"]').remove();
     }
   }
 });

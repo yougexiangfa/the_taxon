@@ -11,6 +11,8 @@ $('[data-title="parent_ancestors"]').dropdown({
         search_url.searchParams.set('index', this.dataset['index']);
       }
       Rails.ajax({url: search_url, type: 'get', dataType: 'script'});
+    } else {
+
     }
   }
 });
