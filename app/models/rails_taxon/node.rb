@@ -5,11 +5,11 @@ module RailsTaxon::Node
     model.attribute :parent_ancestors, :json
     model.before_validation :sync_parent_id, if: -> { parent_ancestors_changed? }
 
-    def max_depth
+    def model.max_depth
       self.hierarchy_class.maximum(:generations).to_i + 1
     end
 
-    def extract_multi_attributes(pairs)
+    def model.extract_multi_attributes(pairs)
       _pairs = pairs.select { |k, _| k.include?('(') }
       _real = {}
       r = self.new.send :extract_callstack_for_multiparameter_attributes, _pairs
