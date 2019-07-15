@@ -1,12 +1,33 @@
 module RailsTaxon::Node
-  extend ActiveSupport::Concern
-  
-  included do
-    has_closure_tree
-    attribute :parent_ancestors, :json
-    before_validation :sync_parent_id, if: -> { parent_ancestors_changed? }
+
+  def self.prepended(model)
+    model.has_closure_tree
+    model.attribute :parent_ancestors, :json
+    model.before_validation :sync_parent_id, if: -> { parent_ancestors_changed? }
+
+    def max_depth
+      self.hierarchy_class.maximum(:generations).to_i + 1
+    end
+
+    def extract_multi_attributes(pairs)
+      _pairs = pairs.select { |k, _| k.include?('(') }
+      _real = {}
+      r = self.new.send :extract_callstack_for_multiparameter_attributes, _pairs
+      r.each do |k, v|
+        _real[k.sub(/ancestors$/, 'id')] = v.values.compact.last
+      end
+      _real
+    end
   end
 
+  def self_and_siblings
+    if self.class.column_names.include?('organ_id')
+      super.where(organ_id: self.organ_id)
+    else
+      super
+    end
+  end
+  
   def depth_str
     (0..self.class.max_depth - self.depth).to_a.reverse.join
   end
@@ -53,23 +74,6 @@ module RailsTaxon::Node
     node_ids
   end
   
-  class_methods do
-    
-    def max_depth
-      self.hierarchy_class.maximum(:generations).to_i + 1
-    end
-  
-    def extract_multi_attributes(pairs)
-      _pairs = pairs.select { |k, _| k.include?('(') }
-      _real = {}
-      r = self.new.send :extract_callstack_for_multiparameter_attributes, _pairs
-      r.each do |k, v|
-        _real[k.sub(/ancestors$/, 'id')] = v.values.compact.last
-      end
-      _real
-    end
-  end
-
 end
 
 # required fields
