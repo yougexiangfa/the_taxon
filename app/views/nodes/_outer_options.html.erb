@@ -3,7 +3,7 @@
   <%= f.collection_select f_method,
                           node.self_and_siblings,
                           :id,
-                          :name,
+                          :node_name,
                           { selected: node.id, include_blank: true, label: false, on: { wrapper_all: false, wrapper_input: false } },
                           { data: { entity_type: f.object.class.base_class.name, node_type: node.class.base_class.name, index: f.index, as: f.object_name, method: f_method, title: 'node_ancestors' } } %>
 </div>
