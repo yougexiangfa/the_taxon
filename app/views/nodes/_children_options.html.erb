@@ -3,7 +3,7 @@
   <%= f.collection_select f_method,
                           node.children,
                           :id,
-                          :node_name,
+                          :name,
                           { selected: node.id, include_blank: true, label: false, on: { wrapper_all: false, wrapper_input: false } },
                           { data: { type: node.class.base_class.name, index: f.index, method: f_method, title: 'parent_ancestors' } } %>
 </div>

@@ -19,14 +19,6 @@ module RailsTaxon::Node
       _real
     end
   end
-  
-  def node_name
-    if defined? super
-      super
-    else
-      name
-    end
-  end
 
   def self_and_siblings
     if self.class.column_names.include?('organ_id')
