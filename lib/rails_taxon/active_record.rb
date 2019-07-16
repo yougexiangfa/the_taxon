@@ -2,7 +2,7 @@ module RailsTaxon::ActiveRecord
 
   def has_taxons(*columns)
     columns.each do |column|
-      attribute "#{column}_ancestors"
+      attribute "#{column}_ancestors", :json
       class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
         before_validation :sync_#{column}_id, if: -> { #{column}_ancestors_changed? }
         
