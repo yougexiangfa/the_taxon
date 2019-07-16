@@ -8,9 +8,6 @@ class NodesController < RailsTaxon.config.app_controller.constantize
 
   def outer
     @entity = params[:entity_type].classify.constantize.new
-    if params[:index] && params[:as]
-      params[:as].sub! /\[#{params[:index]}\]$/, ''
-    end
   end
 
   def outer_search
