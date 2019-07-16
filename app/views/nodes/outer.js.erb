@@ -1,4 +1,4 @@
-<% form_object = default_form_object(@entity, **params.permit(:as, :index).to_h.to_options) %>
+<% form_object = default_form_object(@entity, index: params[:index]) %>
 <% f_method = form_object.wrapper_input_id(params[:method]).gsub('(', '\(').gsub(')', '\)') %>
 
 <% if @node.children.present? %>
