@@ -7,7 +7,6 @@ class NodesController < RailsTaxon.config.app_controller.constantize
   end
 
   def outer
-    @entity = params[:entity_type].classify.constantize.new
   end
 
   def outer_search

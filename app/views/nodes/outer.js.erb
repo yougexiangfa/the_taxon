@@ -1,8 +1,8 @@
-<% form_object = default_form_object(@entity, index: params[:index], as: params[:as]) %>
-<% f_method = form_object.wrapper_input_id(params[:method]) %>
+<% f_object = form_object(as: params[:as]) %>
+<% f_method = f_object.wrapper_input_id(params[:method]) %>
 
 <% if @node.children.present? %>
-  var template = '<%= j(render partial: 'outer_children_options', locals: { f: form_object, node: @node, depth: @node.depth + 1, outer: params[:outer] }) %>'
+  var template = '<%= j(render partial: 'outer_children_options', locals: { f: f_object, node: @node, depth: @node.depth + 1, outer: params[:outer] }) %>'
   $('#<%= j f_method %>').nextAll('[data-title="node_ancestors_input"]').remove();
   $('#<%= j f_method %>').after(template);
   remote_js_load(<%= raw remote_js_load %>)

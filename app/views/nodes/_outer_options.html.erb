@@ -1,9 +1,9 @@
 <% f_method = "#{outer}_ancestors(#{depth}i)" %>
-<div class="field" id="<%= f.wrapper_input_id(f_method) %>" data-title="node_ancestors_input">
+<div class="field" id="<%= f.wrapper_input_id(f_method) %>" data-title="outer_ancestors_input">
   <%= f.collection_select f_method,
                           node.self_and_siblings,
                           :id,
                           :name,
-                          { selected: node.id, include_blank: true, label: false, on: { wrapper_all: false, wrapper_input: false } },
-                          { data: { entity_type: f.object.class.base_class.name, node_type: node.class.base_class.name, index: f.index, as: f.object_name, method: f_method, outer: outer, title: 'node_ancestors' } } %>
+                          { selected: node.id, include_blank: true, on: { label: false, wrapper_all: false, wrapper_input: false } },
+                          { data: { node_type: node.class.base_class.name, index: f.index, as: f.object_name, method: f_method, outer: outer, title: 'outer_ancestors' } } %>
 </div>
