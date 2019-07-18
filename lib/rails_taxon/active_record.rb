@@ -7,7 +7,12 @@ module RailsTaxon::ActiveRecord
         before_validation :sync_#{column}_id, if: -> { #{column}_ancestors_changed? }
         
         def sync_#{column}_id
-          self.#{column}_id = #{column}_ancestors.values.compact.last
+          _outer_id = Hash(#{column}_ancestors).values.compact.last
+          if _outer_id
+            self.#{column}_id = _outer_id
+          else
+            self.#{column}_id = nil
+          end
         end
       RUBY_EVAL
     end
