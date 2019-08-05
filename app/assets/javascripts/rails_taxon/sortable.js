@@ -2,13 +2,13 @@
 
 class SortableController extends Stimulus.Controller {
   connect() {
-    var el = document.getElementById('task_lists');
-    var sortable = Sortable.create(el, {
+    let self = this.element;
+    Sortable.create(self, {
       onEnd: function(evt) {
         if (evt.oldIndex === evt.newIndex) {
           return
         }
-        var url = '/my/tasks/' + evt.item.getAttribute('data-id') + '/reorder';
+        var url = self.dataset['src'] + evt.item.dataset['id'] + '/reorder';
         var body = new FormData();
         this.toArray().forEach(function(el){
           body.append('sort_array[]', el);
@@ -21,5 +21,4 @@ class SortableController extends Stimulus.Controller {
     });
   }
 }
-SortableController.targets = ['src'];
 application.register('sortable', SortableController);
