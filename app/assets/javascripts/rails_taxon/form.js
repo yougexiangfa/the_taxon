@@ -3,7 +3,7 @@ $('[data-title="parent_ancestors"]').dropdown({
   onChange: function(value, text, $selectedItem){
     if (value) {
       var search_path = '/nodes/children';
-      var search_url = new URL(window.location.origin + search_path);
+      var search_url = new URL(location.origin + search_path);
       search_url.searchParams.set('node_id', value);
       search_url.searchParams.set('node_type', this.dataset['type']);
       search_url.searchParams.set('method', this.dataset['method']);
