@@ -5,7 +5,7 @@
   var template = '<%= j(render partial: 'outer_children_options', locals: { f: f_object, node: @node, depth: @node.depth + 1, outer: params[:outer] }) %>'
   $('#<%= j f_method %>').nextAll('[data-title="outer_ancestors_input"]').remove();
   $('#<%= j f_method %>').after(template);
-  remote_js_load(<%= raw remote_js_load %>)
+  remote_js_load('<%= raw remote_js_load %>')
 <% else %>
   if ($('#<%= j f_method %>').next().length > 0) {
     $('#<%= j f_method %>').nextAll('[data-title="outer_ancestors_input"]').remove();
