@@ -1,4 +1,4 @@
-//= require sortablejs
+import Sortable from 'sortablejs'
 
 class SortableController extends Stimulus.Controller {
   connect() {
