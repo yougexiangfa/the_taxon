@@ -1,6 +1,7 @@
+import { Controller } from 'stimulus'
 import Sortable from 'sortablejs'
 
-class SortableController extends Stimulus.Controller {
+class SortableController extends Controller {
   connect() {
     let self = this.element;
     Sortable.create(self, {
