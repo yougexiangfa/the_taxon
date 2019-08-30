@@ -22,4 +22,5 @@ class SortableController extends Controller {
     });
   }
 }
+
 application.register('sortable', SortableController);
