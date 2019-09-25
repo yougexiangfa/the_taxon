@@ -3,6 +3,7 @@ import Sortable from 'sortablejs'
 
 class SortableController extends Controller {
   connect() {
+    console.log('SortableController works!')
     let self = this.element;
     Sortable.create(self, {
       onEnd: function(evt) {
