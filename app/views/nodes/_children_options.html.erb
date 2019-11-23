@@ -1,9 +1,9 @@
 <% f_method = "parent_ancestors(#{node.depth + 1}i)" %>
-<div class="field" id="<%= f.wrapper_input_id(f_method) %>" data-title="parent_ancestors_input">
+<div class="field" id="<%= f.wrap_input_id(f_method) %>" data-title="parent_ancestors_input">
   <%= f.collection_select f_method,
                           node.children,
                           :id,
                           :name,
-                          { selected: node.id, include_blank: true, on: { label: false, wrapper_all: false, wrapper_input: false } },
+                          { selected: node.id, include_blank: true, on: { label: false, wrap_all: false, wrap_input: false } },
                           { data: { type: node.class.base_class.name, index: f.index, method: f_method, title: 'parent_ancestors' } } %>
 </div>
