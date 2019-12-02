@@ -7,6 +7,8 @@ module RailsTaxon::Node
     model.hierarchy_class.attribute :ancestor_id, :integer, null: false
     model.hierarchy_class.attribute :descendant_id, :integer, null: false, index: { name: "#{model.name.underscore}_desc_idx" }
     model.hierarchy_class.attribute :generations, :integer, null: false
+    model.hierarchy_class.attribute :created_at, :datetime, null: true
+    model.hierarchy_class.attribute :updated_at, :datetime, null: true
     model.hierarchy_class.index [:ancestor_id, :descendant_id, :generations], unique: true, name: "#{model.name.underscore}_anc_desc_idx"
 
     def model.max_depth
