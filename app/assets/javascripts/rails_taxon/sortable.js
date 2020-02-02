@@ -11,12 +11,12 @@ class SortableController extends Controller {
           return
         }
         var url = self.dataset['src'] + evt.item.dataset['id'] + '/reorder';
-        var body = new FormData();
+        var body = new FormData()
         this.toArray().forEach(function(el){
-          body.append('sort_array[]', el);
+          body.append('sort_array[]', el)
         });
-        body.append('old_index', evt.oldIndex);
-        body.append('new_index', evt.newIndex);
+        body.append('old_index', evt.oldIndex)
+        body.append('new_index', evt.newIndex)
 
         Rails.ajax({url: url, type: 'PATCH', dataType: 'script', data: body})
       }
@@ -24,4 +24,4 @@ class SortableController extends Controller {
   }
 }
 
-application.register('sortable', SortableController);
+application.register('sortable', SortableController)
