@@ -15,4 +15,4 @@ $('[data-title="parent_ancestors"]').dropdown({
 
     }
   }
-});
+})
