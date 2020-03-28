@@ -1,9 +1,10 @@
-<div class="item" data-controller="menu">
-  <a class="<%= active_helper(controllers: ['tags', 'taxons'], active_class: 'title active', item_class: 'title') %>">
-    <i class="star icon"></i>
+<div class="<%= active_helper(modules: 'taxon/admin', active_class: 'menu ex-accordion is-active', item_class: 'menu ex-accordion') %>" data-controller="menu">
+  <a class="menu-label" data-action="menu#toggle">
+    <i class="fas fa-star"></i>
     <span>标签/分类</span>
+    <i class="fas dropdown"></i>
   </a>
-  <div class="<%= active_helper(controllers: ['tags', 'taxons'], active_class: 'menu content active', item_class: 'menu content') %>">
+  <div class="menu-list">
     <%= link_to '标签管理', admin_tags_path, class: active_helper(controllers: 'tags') %>
     <%= link_to '分类管理', admin_taxons_path, class: active_helper(controllers: 'taxons') %>
   </div>
