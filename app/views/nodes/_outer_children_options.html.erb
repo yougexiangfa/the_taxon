@@ -4,6 +4,6 @@
                           node.children,
                           :id,
                           :name,
-                          { selected: node.id, include_blank: true, on: { label: false, wrap_all: false, wrap_input: false } },
+                          { selected: node.id, include_blank: true, can: { label: false, wrap_all: false, wrap_input: false } },
                           { data: { node_type: node.class.base_class.name, index: f.index, as: f.object_name, method: f_method, outer: outer, title: 'outer_ancestors' } } %>
 </div>

@@ -33,13 +33,13 @@
       <td><%= taxon.entities_count %></td>
       <td><span class="ui label" style="background-color:<%= taxon.color %>"></span></td>
       <td class="ui labels">
-        <%= link_to admin_taxon_path(taxon), data: { tooltip: t('.show') }, class: 'ui blue mini icon button' do %>
+        <%= link_to admin_taxon_path(taxon), aria: { label: t('.show') }, class: 'ui blue mini icon button' do %>
           <i class="fas fa-eye"></i>
         <% end %>
-        <%= link_to edit_admin_taxon_path(taxon), data: { tooltip: t('.edit') }, class: 'ui pink mini icon button' do %>
+        <%= link_to edit_admin_taxon_path(taxon), aria: { label: t('.edit') }, class: 'ui pink mini icon button' do %>
           <i class="fas fa-pencil-alt"></i>
         <% end %>
-        <%= link_to admin_taxon_path(taxon), method: :delete, data: { tooltip: t('.destroy'), confirm: t('.confirm') }, class: 'ui red mini icon button' do %>
+        <%= link_to admin_taxon_path(taxon), method: :delete, aria: { label: t('.destroy') }, data: { confirm: t('.confirm') }, class: 'ui red mini icon button' do %>
           <i class="times icon"></i>
         <% end %>
       </td>
