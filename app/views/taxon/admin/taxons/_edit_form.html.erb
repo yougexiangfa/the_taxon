@@ -1,0 +1,3 @@
+<%= form_with model: @taxon, scope: :taxon, url: admin_taxon_path(@taxon) do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
+<% end %>

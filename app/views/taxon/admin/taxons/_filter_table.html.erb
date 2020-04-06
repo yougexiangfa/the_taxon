@@ -1,0 +1,11 @@
+<table class="as-search">
+  <tr>
+    <th><%= Taxon.human_attribute_name(:type) %></th>
+    <td>
+      <%= link_to t('.all'), filter_params(except: [:type]), class: active_params(type: '', active_class: 'button is-info', item_class: 'button is-light') %>
+      <% Taxon.options_i18n(:type).each do |text, value| %>
+        <%= link_to text, filter_params(type: value), class: active_params(type: value, active_class: 'button is-info', item_class: 'button is-light') %>
+      <% end %>
+    </td>
+  </tr>
+</table>

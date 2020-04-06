@@ -1,6 +1,6 @@
 <% root = f.object.public_send("#{outer}") %>
 <% real_node = defined?(node) ? node : f.object.class.reflections[outer.to_s].klass.new %>
-<div class="inline fields">
+<div class="field is-horizontal">
   <%= f.label "#{outer}_id" %>
   <% if root %>
     <% root.self_and_ancestors.reverse_each do |node| %>
