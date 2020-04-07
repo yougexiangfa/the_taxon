@@ -1,9 +1,13 @@
 <% f_method = "parent_ancestors(#{node.depth}i)" %>
-<div class="field" id="<%= f.wrap_input_id(f_method) %>" data-title="parent_ancestors_input">
-  <%= f.collection_select f_method,
-                          node.self_and_siblings,
-                          :id,
-                          :name,
-                          { selected: node.id, include_blank: true, can: { label: false, wrap_all: false, wrap_input: false } },
-                          { data: { type: node.class.base_class.name, index: f.index, method: f_method, title: 'parent_ancestors' } } %>
+<div class="field-body control" id="<%= f.wrap_input_id(f_method) %>" data-title="parent_ancestors_input">
+  <%=
+    f.collection_select(
+        f_method,
+        node.self_and_siblings,
+        :id,
+        :name,
+        { selected: node.id, include_blank: true, can: { label: false, wrap_all: false, wrap_input: false } },
+        { data: { type: node.class.base_class.name, index: f.index, method: f_method, title: 'parent_ancestors' } }
+      )
+  %>
 </div>

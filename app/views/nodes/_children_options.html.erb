@@ -1,5 +1,5 @@
 <% f_method = "parent_ancestors(#{node.depth + 1}i)" %>
-<div class="field" id="<%= f.wrap_input_id(f_method) %>" data-title="parent_ancestors_input">
+<div class="field-body control" id="<%= f.wrap_input_id(f_method) %>" data-title="parent_ancestors_input">
   <%=
     f.collection_select(
         f_method,
