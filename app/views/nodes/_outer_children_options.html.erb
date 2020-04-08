@@ -1,5 +1,6 @@
 <% f_method = "#{outer}_ancestors(#{depth}i)" %>
-<div class="field-body control" id="<%= f.wrap_input_id(f_method) %>" data-title="outer_ancestors_input">
+<div class="field is-narrow control" id="<%= "#{f_method}_input" %>" data-title="outer_ancestors_input">
+  <div class="select is-fullwidth">
   <%= f.collection_select(
           f_method,
           node.children,
@@ -9,4 +10,5 @@
           { data: { node_type: node.class.base_class.name, index: f.index, as: f.object_name, method: f_method, outer: outer, title: 'outer_ancestors' } }
       )
   %>
+  </div>
 </div>

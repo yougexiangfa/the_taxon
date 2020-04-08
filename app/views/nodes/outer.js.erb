@@ -8,6 +8,6 @@ while (el && el.dataset.title === 'outer_ancestors_input') {
 }
 
 <% if @node.children.present? %>
-  node.insertAdjacentHTML('afterend', '<%= j(render partial: 'outer_children_options', locals: { f: f_object, node: @node, depth: @node.depth + 1, outer: params[:outer] }) %>')
-  remote_js_load('<%= raw remote_js_load %>')
+node.insertAdjacentHTML('afterend', '<%= j(render partial: 'outer_children_options', locals: { f: f_object, node: @node, depth: @node.depth + 1, outer: params[:outer] }) %>')
+remote_js_load('<%= raw remote_js_load %>')
 <% end %>

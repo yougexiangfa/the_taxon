@@ -7,7 +7,7 @@ document.querySelectorAll('select[data-title="outer_ancestors"]').forEach(functi
       search_url.searchParams.set('as', this.dataset['as'])
       search_url.searchParams.set('method', this.dataset['method'])
       search_url.searchParams.set('outer', this.dataset['outer'])
-      search_url.searchParams.set('html_id', this.id)
+      search_url.searchParams.set('html_id', this.parentNode.parentNode.id)
       if (this.dataset['index']) {
         search_url.searchParams.set('index', this.dataset['index'])
       }

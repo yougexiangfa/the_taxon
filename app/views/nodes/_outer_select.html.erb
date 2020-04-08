@@ -2,6 +2,7 @@
 <% real_node = defined?(node) ? node : f.object.class.reflections[outer.to_s].klass.new %>
 <div class="field is-horizontal">
   <%= f.label "#{outer}_id" %>
+  <div class="field-body">
   <% if root %>
     <% root.self_and_ancestors.reverse_each do |node| %>
       <%= render partial: 'nodes/outer_options', locals: { f: f, node: node, depth: node.depth, outer: outer } %>
@@ -9,4 +10,5 @@
   <% else %>
     <%= render partial: 'nodes/outer_options', locals: { f: f, node: real_node, depth: 0, outer: outer } %>
   <% end %>
+  </div>
 </div>
