@@ -14,7 +14,11 @@ document.querySelectorAll('select[data-title="outer_ancestors"]').forEach(functi
 
       Rails.ajax({url: search_url, type: 'GET', dataType: 'script'})
     } else {
-      this.parentNode.parentNode.nextAll('[data-title="outer_ancestors_input"]').remove()
+      el = this.parentNode.parentNode.nextElementSibling
+      while (el && el.dataset.title === 'outer_ancestors_input') {
+        el.remove()
+        el = node.nextElementSibling
+      }
     }
   })
 })
