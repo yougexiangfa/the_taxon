@@ -1,5 +1,6 @@
 <div class="field is-horizontal">
   <%= f.label :parent_ancestors %>
+  <div class="field-body">
   <% if f.object.ancestors.present? %>
     <% f.object.ancestors.reverse_each do |item| %>
       <%= render partial: 'nodes/siblings_options', locals: { f: f, node: item } %>
@@ -7,4 +8,5 @@
   <% else %>
     <%= render partial: 'nodes/siblings_options', locals: { f: f, node: node } %>
   <% end %>
+  </div>
 </div>

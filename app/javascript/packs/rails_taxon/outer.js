@@ -1,7 +1,7 @@
 document.querySelectorAll('select[data-title="outer_ancestors"]').forEach(function(el) {
   el.addEventListener('change', function() {
-    let search_url = new URL(location.origin + '/nodes/outer')
     if (this.value) {
+      let search_url = new URL(location.origin + '/nodes/outer')
       search_url.searchParams.set('node_id', this.value)
       search_url.searchParams.set('node_type', this.dataset['nodeType'])
       search_url.searchParams.set('as', this.dataset['as'])
