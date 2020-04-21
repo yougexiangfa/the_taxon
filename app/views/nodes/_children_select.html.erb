@@ -6,6 +6,8 @@
     <% end %>
   <% elsif node %>
     <%= f.label :parent_ancestors %>
-    <%= render partial: 'nodes/children_options', locals: { f: f, node: node } %>
+    <div class="field-body control">
+      <%= render partial: 'nodes/children_options', locals: { f: f, node: node } %>
+    </div>
   <% end %>
 </div>

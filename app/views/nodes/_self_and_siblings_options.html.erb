@@ -4,7 +4,7 @@
   <%=
     f.collection_select(
         f_method,
-        node.siblings,
+        node.self_and_siblings,
         :id,
         :name,
         { selected: node.id, include_blank: true, can: { label: false, wrap_all: false, wrap_select: false } },
