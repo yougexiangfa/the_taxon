@@ -1,7 +1,7 @@
 <div class="<%= active_helper(modules: 'taxon/admin', active: 'menu ex-accordion is-active', item: 'menu ex-accordion') %>" data-controller="menu">
-  <%= content_tag :div, class: 'menu-list' do -%>
-    <%= link_to '标签管理', admin_tags_path, class: active_helper(controllers: 'tags') %>
-    <%= link_to '分类管理', admin_taxons_path, class: active_helper(controllers: 'taxons') %>
+  <%= content_tag :div, class: 'menu-list' do %>
+    <%= link_to '标签管理', admin_tags_path, class: active_helper(controllers: 'tags', active: 'is-active') %>
+    <%= link_to '分类管理', admin_taxons_path, class: active_helper(controllers: 'taxons', active: 'is-active') -%>
   <% end %>
   <a class="menu-label" data-action="menu#toggle">
     <i class="fas fa-star"></i>
