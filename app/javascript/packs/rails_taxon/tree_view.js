@@ -1,32 +1,39 @@
-// jQuery: nextUntil
-HTMLElement.prototype.collapse = function() {
-  var par = this.parentNode.parentNode
-  var selector = 'tr[data-depth$="' + par.dataset['depth'] + '"]';
-  $(par).nextUntil(selector).hide()
-  this.classList.replace('fa-caret-down', 'fa-caret-right');
-  this.addEventListener('click', function(e) {
-    e.target.expand()
-  })
+import { Controller } from 'stimulus'
+
+class TreeController extends Controller {
+
+  connect() {
+    console.log('Tree Controller works!')
+  }
+
+  collapse(element) {
+    let ele = element.target
+    let par = ele.parentNode.parentNode
+
+    let el = par.nextElementSibling
+    while (el && par.dataset['depth'].endsWith(el.dataset.depth)) {
+      el.style.display = 'none'
+      el = el.nextElementSibling
+    }
+
+    ele.classList.replace('fa-caret-down', 'fa-caret-right')
+    ele.dataset['action'] = 'click->tree#expand'
+  }
+
+  expand(element) {
+    let ele = element.target
+    let par = ele.parentNode.parentNode
+
+    let el = par.nextElementSibling
+    while (el && par.dataset['depth'].endsWith(el.dataset.depth)) {
+      el.style.display = 'table-row'
+      el = el.nextElementSibling
+    }
+
+    ele.classList.replace('fa-caret-right', 'fa-caret-down')
+    ele.dataset['action'] = 'click->tree#collapse'
+  }
+
 }
 
-HTMLElement.prototype.expand = function() {
-  var par = this.parentNode.parentNode
-  var selector = 'tr[data-depth$="' + par.dataset['depth'] + '"]';
-  $(par).nextUntil(selector).show();
-  this.classList.replace('fa-caret-right', 'fa-caret-down');
-  this.addEventListener('click', function(e){
-    e.target.collapse()
-  })
-}
-
-document.querySelectorAll('i.fas.fa-caret-down.grey.link.icon').forEach(function(el) {
-  el.addEventListener('click', function(e){
-    e.target.collapse()
-  })
-})
-
-document.querySelectorAll('i.fas.fa-caret-right.grey.link.icon').forEach(function(el) {
-  el.addEventListener('click', function(e){
-    e.target.expand()
-  })
-})
+application.register('tree', TreeController)
