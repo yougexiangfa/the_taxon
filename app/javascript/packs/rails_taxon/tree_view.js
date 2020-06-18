@@ -11,7 +11,7 @@ class TreeController extends Controller {
     let par = ele.parentNode.parentNode
 
     let el = par.nextElementSibling
-    while (el && par.dataset['depth'].endsWith(el.dataset.depth)) {
+    while (el && el.dataset['depth'] !== par.dataset['depth'] && par.dataset['depth'].endsWith(el.dataset['depth'])) {
       el.style.display = 'none'
       el = el.nextElementSibling
     }
@@ -25,7 +25,7 @@ class TreeController extends Controller {
     let par = ele.parentNode.parentNode
 
     let el = par.nextElementSibling
-    while (el && par.dataset['depth'].endsWith(el.dataset.depth)) {
+    while (el && el.dataset['depth'] !== par.dataset['depth'] && par.dataset['depth'].endsWith(el.dataset['depth'])) {
       el.style.display = 'table-row'
       el = el.nextElementSibling
     }

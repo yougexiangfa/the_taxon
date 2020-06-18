@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/work-design/rails_com.git
-  revision: 6caef1c18a8cdaf348281f4a496d50f1c558658f
+  revision: c22989ee627f3cdb0a79c7c7477ede45bb2ca683
   specs:
     rails_com (1.2.9)
       default_where (~> 2.2)
@@ -12,7 +12,7 @@ PATH
   remote: .
   specs:
     rails_taxon (1.0.0)
-      acts_as_list (>= 0.9, <= 1.0)
+      acts_as_list (>= 1.0)
       closure_tree (>= 6.6, <= 7.1)
       rails_com (~> 1.2)
 
