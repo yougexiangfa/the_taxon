@@ -1,4 +1,4 @@
-$('[data-title="node_ancestors"]').dropdown({
+('[data-title="node_ancestors"]').dropdown({
   placeholder: false,
   onChange: function(value, text, $selectedItem){
     var search_path = '/nodes/outer_search'
