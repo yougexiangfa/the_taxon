@@ -4,14 +4,14 @@
   <div class="active section">Show</div>
 </div>
 
-<table class="ui very basic large table">
+<table class="table is-hoverable is-fullwidth">
   <tbody>
     <tr>
-      <td class="right aligned"><%= Tag.human_attribute_name(:name) %></td>
+      <td class="has-text-right"><%= Tag.human_attribute_name(:name) %></td>
       <td><%= @tag.name %></td>
     </tr>
     <tr>
-      <td class="right aligned"><%= Tag.human_attribute_name(:type) %></td>
+      <td class="has-text-right"><%= Tag.human_attribute_name(:type) %></td>
       <td><%= @tag.type %></td>
     </tr>
   </tbody>
