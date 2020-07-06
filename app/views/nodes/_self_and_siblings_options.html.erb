@@ -8,7 +8,7 @@
         :id,
         :name,
         { selected: node.id, include_blank: true, can: { label: false, wrap_all: false, wrap_select: false } },
-        { data: { type: node.class.base_class.name, index: f.index, method: f_method, title: 'parent_ancestors' } }
+        { data: { type: node.class.base_class.name, index: f.index, method: f_method, controller: 'taxon', action: 'taxon#choose' } }
       )
   %>
   </div>

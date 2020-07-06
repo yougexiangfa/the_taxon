@@ -1,24 +1,40 @@
-document.querySelectorAll('select[data-title="outer_ancestors"]').forEach(function(el) {
-  el.addEventListener('change', function() {
-    if (this.value) {
+import { Controller } from 'stimulus'
+
+class OuterController extends Controller {
+
+  connect() {
+    console.debug('Outer Controller works!')
+  }
+
+  // change
+  choose(event) {
+    let element = event.currentTarget
+    if (element.value) {
       let search_url = new URL(location.origin + '/nodes/outer')
-      search_url.searchParams.set('node_id', this.value)
-      search_url.searchParams.set('node_type', this.dataset['nodeType'])
-      search_url.searchParams.set('as', this.dataset['as'])
-      search_url.searchParams.set('method', this.dataset['method'])
-      search_url.searchParams.set('outer', this.dataset['outer'])
-      search_url.searchParams.set('html_id', this.parentNode.parentNode.id)
-      if (this.dataset['index']) {
-        search_url.searchParams.set('index', this.dataset['index'])
+      search_url.searchParams.set('node_id', element.value)
+      search_url.searchParams.set('node_type', element.dataset['nodeType'])
+      search_url.searchParams.set('as', element.dataset['as'])
+      search_url.searchParams.set('method', element.dataset['method'])
+      search_url.searchParams.set('outer', element.dataset['outer'])
+      search_url.searchParams.set('html_id', element.parentNode.parentNode.id)
+      if (element.dataset['index']) {
+        search_url.searchParams.set('index', element.dataset['index'])
       }
 
-      Rails.ajax({url: search_url, type: 'GET', dataType: 'script'})
+      Rails.ajax({
+        url: search_url,
+        type: 'GET',
+        dataType: 'script'
+      })
     } else {
-      el = this.parentNode.parentNode.nextElementSibling
+      let el = element.parentNode.parentNode.nextElementSibling
       while (el && el.dataset.title === 'outer_ancestors_input') {
         el.remove()
         el = node.nextElementSibling
       }
     }
-  })
-})
+  }
+
+}
+
+application.register('outer', OuterController)

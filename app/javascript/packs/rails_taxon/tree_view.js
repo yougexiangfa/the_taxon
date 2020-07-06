@@ -3,7 +3,7 @@ import { Controller } from 'stimulus'
 class TreeController extends Controller {
 
   connect() {
-    console.log('Tree Controller works!')
+    console.debug('Tree Controller works!')
   }
 
   collapse(element) {

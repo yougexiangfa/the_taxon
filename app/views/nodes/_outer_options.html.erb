@@ -2,12 +2,12 @@
 <div class="field is-narrow control" id="<%= "#{f_method}_input" %>" data-title="outer_ancestors_input">
   <%=
     f.collection_select(
-      f_method,
-      node.self_and_siblings,
-      :id,
-      :name,
-      { selected: node.id, include_blank: true, label: false, wrap: { all: nil, select: 'select is-fullwidth' } },
-      { data: { node_type: node.class.base_class.name, index: f.index, as: f.object_name, method: f_method, outer: outer, title: 'outer_ancestors' } }
+        f_method,
+        node.self_and_siblings,
+        :id,
+        :name,
+        { selected: node.id, include_blank: true, label: false, wrap: { all: nil, select: 'select is-fullwidth' } },
+        { data: { node_type: node.class.base_class.name, index: f.index, as: f.object_name, method: f_method, outer: outer, controller: 'outer', action: 'outer#choose' } }
     )
   %>
 </div>

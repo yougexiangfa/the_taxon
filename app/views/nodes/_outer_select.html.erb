@@ -1,7 +1,7 @@
 <div class="field is-horizontal">
   <%= f.label "#{outer}_id" %>
   <div class="field-body">
-  <% if node.ancestors.present? %>
+  <% if node&.ancestors.present? %>
     <% node.ancestors.reverse_each do |node| %>
       <%= render partial: 'nodes/outer_options', locals: { f: f, node: node, depth: node.depth, outer: outer } %>
     <% end %>
