@@ -2,9 +2,10 @@ class Taxon::Admin::TagsController < Taxon::Admin::BaseController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
 
   def index
-    q_params = {}.with_indifferent_access
+    q_params = {}
     q_params["name-#{I18n.locale}"] = params.dig(:q, :name)
     q_params.merge! params.permit(:type)
+
     @tags = Tag.default_where(q_params).page(params[:page])
   end
 
@@ -15,10 +16,8 @@ class Taxon::Admin::TagsController < Taxon::Admin::BaseController
   def create
     @tag = Tag.new(tag_params)
 
-    if @tag.save
-      redirect_to admin_tags_url
-    else
-      render :new
+    unless @tag.save
+      render :new, locals: { model: @tag }, status: :unprocessable_entity
     end
   end
 
@@ -29,16 +28,15 @@ class Taxon::Admin::TagsController < Taxon::Admin::BaseController
   end
 
   def update
-    if @tag.update(tag_params)
-      redirect_to admin_tags_url
-    else
-      render :edit
+    @tag.assign_attributes tag_params
+
+    unless @tag.save
+      render :edit, locals: { model: @tag }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @tag.destroy
-    redirect_to admin_tags_url
   end
 
   private

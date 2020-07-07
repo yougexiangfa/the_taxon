@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
 
-  resources :nodes, only: [] do
-    get :children, on: :collection
-    get :outer, on: :collection
-    get :outer_search, on: :collection
+  scope module: 'taxon' do
+    resources :nodes, only: [] do
+      collection do
+        get :children
+        get :outer
+        get :outer_search
+      end
+    end
   end
 
   scope :admin, module: 'taxon/admin', as: :admin do

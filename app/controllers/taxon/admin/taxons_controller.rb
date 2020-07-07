@@ -13,10 +13,8 @@ class Taxon::Admin::TaxonsController < Taxon::Admin::BaseController
   def create
     @taxon = Taxon.new(taxon_params)
 
-    if @taxon.save
-      redirect_to admin_taxons_url
-    else
-      render :new
+    unless @taxon.save
+      render :new, locals: { model: @taxon }, status: :unprocessable_entity
     end
   end
 
@@ -27,16 +25,15 @@ class Taxon::Admin::TaxonsController < Taxon::Admin::BaseController
   end
 
   def update
-    if @taxon.update(taxon_params)
-      redirect_to admin_taxons_url
-    else
-      render :edit
+    @taxon.update(taxon_params)
+
+    unless
+      render :edit, locals: { model: @taxon }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @taxon.destroy
-    redirect_to admin_taxons_url
   end
 
   private

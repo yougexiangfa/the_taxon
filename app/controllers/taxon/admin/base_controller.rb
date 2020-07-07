@@ -1,4 +1,3 @@
-class Taxon::Admin::BaseController < RailsTaxon.config.admin_controller.constantize
+class Taxon::Admin::BaseController < AdminController
 
-
-end
+end unless defined? Taxon::Admin::BaseController
