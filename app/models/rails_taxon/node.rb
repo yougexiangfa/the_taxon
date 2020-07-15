@@ -1,3 +1,5 @@
+# required fields
+# :parent_id
 module RailsTaxon::Node
 
   def self.prepended(model)
@@ -33,7 +35,7 @@ module RailsTaxon::Node
       super
     end
   end
-  
+
   def depth_str
     (0..self.class.max_depth - self.depth).to_a.reverse.join
   end
@@ -79,8 +81,5 @@ module RailsTaxon::Node
     end
     node_ids
   end
-  
-end
 
-# required fields
-# :parent_id
+end
