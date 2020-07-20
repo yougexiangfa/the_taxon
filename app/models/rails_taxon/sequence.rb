@@ -18,7 +18,7 @@ module RailsTaxon::Sequence
   class_methods do
     def sequences
       Rails.cache.fetch("sequence/#{self.name}") do
-        self.select(:sequence).distinct.pluck(:sequence).sort
+        self.select(:sequence).distinct.pluck(:sequence).compact.sort
       end
     end
 
