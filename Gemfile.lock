@@ -1,8 +1,9 @@
 GIT
   remote: https://github.com/work-design/rails_com.git
-  revision: 0d4b7e294329ed91cd8b65ffa5535fc30faa8394
+  revision: 337b3f261f0f99f46d6e8305fb6df41a2413f645
   specs:
     rails_com (1.2.9)
+      acme-client
       default_where (~> 2.2)
       http-form_data (~> 2.2)
       httpx (~> 0.8)
@@ -20,6 +21,8 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    acme-client (2.0.6)
+      faraday (>= 0.17, < 2.0.0)
     actioncable (6.0.3.2)
       actionpack (= 6.0.3.2)
       nio4r (~> 2.0)
@@ -91,6 +94,8 @@ GEM
     factory_bot_rails (6.0.0)
       factory_bot (~> 6.0.0)
       railties (>= 5.0.0)
+    faraday (1.0.1)
+      multipart-post (>= 1.2, < 3)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     http-2-next (0.2.6)
@@ -124,6 +129,7 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.14.1)
+    multipart-post (2.1.1)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
