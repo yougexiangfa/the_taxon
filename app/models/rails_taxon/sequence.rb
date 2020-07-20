@@ -16,10 +16,18 @@ module RailsTaxon::Sequence
   end
 
   class_methods do
-    def sequence
+    def sequences
       Rails.cache.fetch("sequence/#{self.name}") do
         self.select(:sequence).distinct.pluck(:sequence).sort
       end
+    end
+
+    def max_sequence
+      sequences[-1] || 1
+    end
+
+    def min_sequence
+      sequences[0] || 1
     end
   end
 
