@@ -17,7 +17,7 @@ module RailsTaxon::Taxon
   end
 
   def cover_url
-    cover.service_url if cover.attachment.present?
+    cover.url if cover.attachment.present?
   end
 
 end
