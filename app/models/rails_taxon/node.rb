@@ -3,7 +3,11 @@
 module RailsTaxon::Node
 
   def self.prepended(model)
-    model.has_closure_tree
+    if model.column_names.include?('position')
+      model.has_closure_tree order: 'position'
+    else
+      model.has_closure_tree
+    end
     model.attribute :parent_ancestors, :json
     model.before_validation :sync_parent_id, if: -> { parent_ancestors_changed? }
     model.hierarchy_class.attribute :ancestor_id, :integer, null: false
