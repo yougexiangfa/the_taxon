@@ -1,0 +1,14 @@
+<div class="field is-horizontal">
+  <%= f.label :parent_ancestors %>
+  <div class="field-body">
+  <% if f.object.new_record? %>
+    <%= render partial: 'taxon/nodes/siblings_options', locals: { f: f, node: f.object } %>
+  <% elsif f.object.ancestors.present? %>
+    <% f.object.ancestors.reverse_each do |item| %>
+      <%= render partial: 'taxon/nodes/self_and_siblings_options', locals: { f: f, node: item } %>
+    <% end %>
+  <% else %>
+    <%= render partial: 'taxon/nodes/siblings_options', locals: { f: f, node: f.object } %>
+  <% end %>
+  </div>
+</div>
