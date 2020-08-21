@@ -3,7 +3,7 @@
 module RailsTaxon::Node
 
   def self.prepended(model)
-    if model.column_names.include?('position')
+    if model.table_exists? && model.column_names.include?('position')
       model.has_closure_tree order: 'position'
     else
       model.has_closure_tree
