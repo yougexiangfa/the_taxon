@@ -1,28 +1,29 @@
 # required fields
 # :parent_id
 module RailsTaxon::Node
-  extend ActiveSupport::Concern
 
-  included do
-    if table_exists? && column_names.include?('position')
-      has_closure_tree order: 'position'
+  def self.included(model)
+    if model.table_exists? && model.column_names.include?('position')
+      model.has_closure_tree order: 'position'
     else
-      has_closure_tree
+      model.has_closure_tree
     end
-    attribute :parent_ancestors, :json
-    before_validation :sync_parent_id, if: -> { parent_ancestors_changed? }
-    hierarchy_class.attribute :ancestor_id, :integer, null: false
-    hierarchy_class.attribute :descendant_id, :integer, null: false, index: { name: "#{name.underscore}_desc_idx" }
-    hierarchy_class.attribute :generations, :integer, null: false
-    hierarchy_class.attribute :created_at, :datetime, null: true
-    hierarchy_class.attribute :updated_at, :datetime, null: true
-    hierarchy_class.index [:ancestor_id, :descendant_id, :generations], unique: true, name: "#{name.underscore}_anc_desc_idx"
+    model.include RailsTaxon::Model
 
-    def max_depth
+    model.attribute :parent_ancestors, :json
+    model.before_validation :sync_parent_id, if: -> { parent_ancestors_changed? }
+    model.hierarchy_class.attribute :ancestor_id, :integer, null: false
+    model.hierarchy_class.attribute :descendant_id, :integer, null: false, index: { name: "#{model.name.underscore}_desc_idx" }
+    model.hierarchy_class.attribute :generations, :integer, null: false
+    model.hierarchy_class.attribute :created_at, :datetime, null: true
+    model.hierarchy_class.attribute :updated_at, :datetime, null: true
+    model.hierarchy_class.index [:ancestor_id, :descendant_id, :generations], unique: true, name: "#{model.name.underscore}_anc_desc_idx"
+
+    def model.max_depth
       self.hierarchy_class.maximum(:generations).to_i + 1
     end
 
-    def extract_multi_attributes(pairs)
+    def model.extract_multi_attributes(pairs)
       _pairs = pairs.select { |k, _| k.include?('(') }
       _real = {}
       r = self.new.send :extract_callstack_for_multiparameter_attributes, _pairs
@@ -30,14 +31,6 @@ module RailsTaxon::Node
         _real[k.sub(/ancestors$/, 'id')] = v.values.compact.last
       end
       _real
-    end
-  end
-
-  def self_and_siblings
-    if self.class.column_names.include?('organ_id')
-      super.where(organ_id: self.organ_id)
-    else
-      super
     end
   end
 
@@ -56,14 +49,6 @@ module RailsTaxon::Node
 
   def middle?
     parent_id.present? && depth < self.class.max_depth
-  end
-
-  def depth
-    if parent
-      parent.depth + 1
-    else
-      super
-    end
   end
 
   def sheer_descendant_ids(c_ids = child_ids)

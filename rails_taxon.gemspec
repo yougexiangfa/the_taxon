@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency 'rails_com', '~> 1.2'
-  s.add_dependency 'closure_tree', '>= 6.6', '<= 7.1'
+  s.add_dependency 'closure_tree', '>= 7.2'
   s.add_dependency 'acts_as_list', '>= 1.0'
 end
