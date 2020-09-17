@@ -9,7 +9,6 @@ module RailsTaxon::Model
   end
 
   def depth
-    binding.pry
     if parent
       parent.depth + 1
     else
