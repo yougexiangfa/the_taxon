@@ -1,27 +1,28 @@
 # required fields
 # :parent_id
 module RailsTaxon::Node
+  extend ActiveSupport::Concern
 
-  def self.prepended(model)
-    if model.table_exists? && model.column_names.include?('position')
-      model.has_closure_tree order: 'position'
+  included do
+    if table_exists? && column_names.include?('position')
+      has_closure_tree order: 'position'
     else
-      model.has_closure_tree
+      has_closure_tree
     end
-    model.attribute :parent_ancestors, :json
-    model.before_validation :sync_parent_id, if: -> { parent_ancestors_changed? }
-    model.hierarchy_class.attribute :ancestor_id, :integer, null: false
-    model.hierarchy_class.attribute :descendant_id, :integer, null: false, index: { name: "#{model.name.underscore}_desc_idx" }
-    model.hierarchy_class.attribute :generations, :integer, null: false
-    model.hierarchy_class.attribute :created_at, :datetime, null: true
-    model.hierarchy_class.attribute :updated_at, :datetime, null: true
-    model.hierarchy_class.index [:ancestor_id, :descendant_id, :generations], unique: true, name: "#{model.name.underscore}_anc_desc_idx"
+    attribute :parent_ancestors, :json
+    before_validation :sync_parent_id, if: -> { parent_ancestors_changed? }
+    hierarchy_class.attribute :ancestor_id, :integer, null: false
+    hierarchy_class.attribute :descendant_id, :integer, null: false, index: { name: "#{name.underscore}_desc_idx" }
+    hierarchy_class.attribute :generations, :integer, null: false
+    hierarchy_class.attribute :created_at, :datetime, null: true
+    hierarchy_class.attribute :updated_at, :datetime, null: true
+    hierarchy_class.index [:ancestor_id, :descendant_id, :generations], unique: true, name: "#{name.underscore}_anc_desc_idx"
 
-    def model.max_depth
+    def max_depth
       self.hierarchy_class.maximum(:generations).to_i + 1
     end
 
-    def model.extract_multi_attributes(pairs)
+    def extract_multi_attributes(pairs)
       _pairs = pairs.select { |k, _| k.include?('(') }
       _real = {}
       r = self.new.send :extract_callstack_for_multiparameter_attributes, _pairs
