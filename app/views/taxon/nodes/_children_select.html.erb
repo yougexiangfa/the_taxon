@@ -1,9 +1,11 @@
 <div class="field is-horizontal">
   <% if f.object.ancestors.present? %>
     <%= f.label :parent_ancestors %>
+    <div class="field-body control">
     <% f.object.ancestors.reverse_each do |item| %>
       <%= render partial: 'taxon/nodes/siblings_options', locals: { f: f, node: item } %>
     <% end %>
+    </div>
   <% elsif node %>
     <%= f.label :parent_ancestors %>
     <div class="field-body control">
