@@ -9,5 +9,4 @@ while (el && el.dataset.title === 'parent_ancestors_input') {
 
 <% if @node.children.present? %>
 node.insertAdjacentHTML('afterend', '<%= j(render partial: 'children_options', locals: { f: form_object, node: @node, depth: @node.depth + 1 }) %>')
-remote_js_load('<%= raw remote_js_load %>')
 <% end %>

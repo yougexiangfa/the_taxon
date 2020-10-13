@@ -13,7 +13,7 @@ class OuterController extends Controller {
       let search_url = new URL(location.origin + '/nodes/outer')
       search_url.searchParams.set('node_id', element.value)
       search_url.searchParams.set('node_type', element.dataset['nodeType'])
-      search_url.searchParams.set('as', element.dataset['as'])
+      search_url.searchParams.set('scope', element.dataset['scope'])
       search_url.searchParams.set('method', element.dataset['method'])
       search_url.searchParams.set('outer', element.dataset['outer'])
       search_url.searchParams.set('html_id', element.parentNode.parentNode.id)

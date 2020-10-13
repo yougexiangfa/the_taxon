@@ -7,7 +7,7 @@
         :id,
         :name,
         { selected: node.id, include_blank: true, label: false, wrap: { all: nil, select: 'select is-fullwidth' } },
-        { data: { node_type: node.class.base_class.name, index: f.index, as: f.object_name, method: f_method, outer: outer, controller: 'outer', action: 'outer#choose' } }
+        { data: { node_type: node.class.base_class.name, index: f.index, scope: f.object_name, method: f_method, outer: outer, controller: 'outer', action: 'outer#choose' } }
     )
   %>
 </div>
